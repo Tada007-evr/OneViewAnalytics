@@ -1,0 +1,36 @@
+create extension if not exists pgcrypto;
+create table if not exists students (student_id uuid primary key references auth.users(id) on delete cascade,name text not null,academic_level text not null default 'AS Level',subject text not null default 'Mathematics',created_at timestamptz not null default now());
+create table if not exists topics (topic_id uuid primary key default gen_random_uuid(),topic_name text not null unique,parent_topic text,active boolean not null default true);
+create table if not exists subtopics (subtopic_id uuid primary key default gen_random_uuid(),topic_id uuid not null references topics(topic_id) on delete cascade,subtopic_name text not null,unique(topic_id,subtopic_name));
+create table if not exists exam_papers (paper_id uuid primary key default gen_random_uuid(),exam_board text not null default 'Cambridge',academic_level text not null,subject text not null,year int not null,session text not null,paper_code text not null,total_marks numeric(8,2) not null check(total_marks>0),source_pdf text,unique(year,session,paper_code));
+create table if not exists questions (question_id uuid primary key default gen_random_uuid(),paper_id uuid not null references exam_papers(paper_id) on delete cascade,question_number text not null,max_marks numeric(8,2) not null check(max_marks>=0),unique(paper_id,question_number));
+create table if not exists question_topics (question_id uuid not null references questions(question_id) on delete cascade,topic_id uuid not null references topics(topic_id),subtopic_id uuid references subtopics(subtopic_id),primary key(question_id,topic_id));
+create table if not exists sub_parts (sub_part_id uuid primary key default gen_random_uuid(),question_id uuid not null references questions(question_id) on delete cascade,label text not null,max_marks numeric(8,2) not null check(max_marks>=0),source_question_ref text,unique(question_id,label));
+create table if not exists subpart_topics (sub_part_id uuid not null references sub_parts(sub_part_id) on delete cascade,topic_id uuid not null references topics(topic_id),subtopic_id uuid references subtopics(subtopic_id),primary key(sub_part_id,topic_id));
+create table if not exists practice_attempts (attempt_id uuid primary key default gen_random_uuid(),student_id uuid not null references students(student_id) on delete cascade,paper_id uuid not null references exam_papers(paper_id),attempt_date date not null default current_date,status text not null check(status in ('draft','completed')),total_score numeric(8,2) not null default 0 check(total_score>=0),percentage numeric(6,2) not null default 0 check(percentage between 0 and 100),created_at timestamptz not null default now());
+create table if not exists question_results (question_result_id uuid primary key default gen_random_uuid(),attempt_id uuid not null references practice_attempts(attempt_id) on delete cascade,question_id uuid not null references questions(question_id),score numeric(8,2) not null default 0 check(score>=0),unique(attempt_id,question_id));
+create table if not exists subpart_results (subpart_result_id uuid primary key default gen_random_uuid(),question_result_id uuid not null references question_results(question_result_id) on delete cascade,sub_part_id uuid not null references sub_parts(sub_part_id),score numeric(8,2) not null default 0 check(score>=0),unique(question_result_id,sub_part_id));
+create index if not exists idx_attempt_student on practice_attempts(student_id);
+create index if not exists idx_question_paper on questions(paper_id);
+create index if not exists idx_qr_attempt on question_results(attempt_id);
+
+alter table students enable row level security; alter table practice_attempts enable row level security; alter table question_results enable row level security; alter table subpart_results enable row level security;
+alter table topics enable row level security; alter table subtopics enable row level security; alter table exam_papers enable row level security; alter table questions enable row level security; alter table question_topics enable row level security; alter table sub_parts enable row level security; alter table subpart_topics enable row level security;
+
+create policy "authenticated reads topics" on topics for select to authenticated using(true);
+create policy "authenticated reads subtopics" on subtopics for select to authenticated using(true);
+create policy "authenticated reads papers" on exam_papers for select to authenticated using(true);
+create policy "authenticated reads questions" on questions for select to authenticated using(true);
+create policy "authenticated reads question topics" on question_topics for select to authenticated using(true);
+create policy "authenticated reads subparts" on sub_parts for select to authenticated using(true);
+create policy "authenticated reads subpart topics" on subpart_topics for select to authenticated using(true);
+create policy "student reads own profile" on students for select using(student_id=auth.uid());
+create policy "student inserts own profile" on students for insert with check(student_id=auth.uid());
+create policy "student updates own profile" on students for update using(student_id=auth.uid()) with check(student_id=auth.uid());
+create policy "student reads own attempts" on practice_attempts for select using(student_id=auth.uid());
+create policy "student inserts own attempts" on practice_attempts for insert with check(student_id=auth.uid());
+create policy "student updates own attempts" on practice_attempts for update using(student_id=auth.uid()) with check(student_id=auth.uid());
+create policy "student reads own question results" on question_results for select using(exists(select 1 from practice_attempts a where a.attempt_id=question_results.attempt_id and a.student_id=auth.uid()));
+create policy "student inserts own question results" on question_results for insert with check(exists(select 1 from practice_attempts a where a.attempt_id=question_results.attempt_id and a.student_id=auth.uid()));
+create policy "student reads own subpart results" on subpart_results for select using(exists(select 1 from question_results qr join practice_attempts a on a.attempt_id=qr.attempt_id where qr.question_result_id=subpart_results.question_result_id and a.student_id=auth.uid()));
+create policy "student inserts own subpart results" on subpart_results for insert with check(exists(select 1 from question_results qr join practice_attempts a on a.attempt_id=qr.attempt_id where qr.question_result_id=subpart_results.question_result_id and a.student_id=auth.uid()));
