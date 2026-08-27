@@ -27,24 +27,14 @@ def tag_class(status):
     return "tag-purple"
 
 
-def insight_and_recommendation(row, priority_df):
-    if int(row.get("papers_completed") or 0) < 5:
-        return "INS-05", "More practice data is needed before OneView can reliably assess this area.", "REC-06", "More relevant practice required; no weakness recommendation yet."
-    if priority_df.empty:
+def insight_and_recommendation(sb, user, level, subject):
+    df = get_df(sb, "v_overview_insight_recommendation", "*", {
+        "student_id": user.id, "academic_level": level, "subject": subject
+    })
+    if df.empty:
         return None, None, None, None
-    p = priority_df.iloc[0]
-    sub = p["subtopic_name"]
-    if float(p.get("recent_error_frequency") or 0) >= 50:
-        x, y = int(p.get("recent_error_count") or 0), int(p.get("recent_observation_count") or 0)
-        return "INS-02", f"You have made errors in {sub} in {x} of your last {y} relevant attempts.", "REC-02", "Review recent errors; practise the same skill; reattempt similar questions."
-    if p.get("subtopic_trend") == "Needs Focus":
-        return "INS-03", f"Your recent performance in {sub} is declining.", "REC-03", "Targeted practice before the next full paper; review mistakes afterward."
-    gap = float(p.get("performance_gap_pp") or 0)
-    if gap >= 5:
-        return "INS-01", f"{sub} is below your overall performance.", "REC-01", "Review the concept; practise targeted questions; reattempt similar past-paper questions."
-    if p.get("subtopic_trend") == "Improving" and gap > 0:
-        return "INS-04", f"Your performance in {sub} is improving, but it remains below your overall average.", "REC-05", "Continue targeted practice; reassess after more attempts."
-    return None, None, None, None
+    row = df.iloc[0]
+    return row.get("insight_rule_id"), row.get("insight_text"), row.get("recommendation_rule_id"), row.get("recommendation_text")
 
 
 @st.dialog("Edit Target")
@@ -60,7 +50,8 @@ def edit_target(sb, user, level, subject, row):
     valid = presets[(presets["active"] == True) & (presets["target_value"] <= available)] if not presets.empty else pd.DataFrame()
     options = valid["target_type"].tolist() + ["Custom"]
     current_type = row.get("target_type")
-    target_type = st.selectbox("Target Type", options, index=options.index(current_type) if current_type in options else 0)
+    preferred = current_type if current_type in options else ("Recommended" if "Recommended" in options else options[0])
+    target_type = st.selectbox("Target Type", options, index=options.index(preferred))
     if target_type == "Custom":
         current = min(max(int(row.get("target_value") or 15), 15), available)
         target_value = st.number_input("Custom Target", min_value=15, max_value=available, value=current, step=1)
@@ -153,8 +144,8 @@ def subject_panel(sb, user, level, subject):
         with left:
             trend_panel(sb, user, level, subject, row.get("trend_status") or "More data needed")
         with right:
-            p = priority_panel(sb, user, level, subject)
-        ins_rule, insight, rec_rule, rec = insight_and_recommendation(row, p)
+            priority_panel(sb, user, level, subject)
+        ins_rule, insight, rec_rule, rec = insight_and_recommendation(sb, user, level, subject)
         i1, i2 = st.columns(2)
         with i1:
             st.markdown("##### ◉ OneView Insight")
@@ -179,12 +170,16 @@ def render_overview(sb, user):
         level = st.radio("Exam Level", ["AS Level","A Level"], horizontal=True, key="overview_level", label_visibility="collapsed")
     rows = get_df(sb, "v_bi_overview_dashboard", "last_updated", {"student_id": user.id, "academic_level": level})
     times = pd.to_datetime(rows["last_updated"], utc=True, errors="coerce") if not rows.empty else pd.Series(dtype="datetime64[ns, UTC]")
-    if not times.empty: times = times[times.dt.year > 1970]
+    if not times.empty:
+        times = times[times.dt.year > 1970]
     updated = times.max().strftime("%d %b %Y, %I:%M %p") if not times.empty else "No activity yet"
     c3.markdown(f"<div class='ov-muted' style='text-align:right'>Last updated: {updated}</div>", unsafe_allow_html=True)
     if c3.button("+ Record Practice Paper", type="primary", use_container_width=True):
-        st.session_state.nav = "Record Practice Paper"; st.rerun()
+        st.session_state.nav = "Record Practice Paper"
+        st.rerun()
     left, right = st.columns(2, gap="medium")
-    with left: subject_panel(sb, user, level, "Pure Mathematics")
-    with right: subject_panel(sb, user, level, "Statistics")
+    with left:
+        subject_panel(sb, user, level, "Pure Mathematics")
+    with right:
+        subject_panel(sb, user, level, "Statistics")
     st.markdown("<div class='oneview-footer'>Analytics use eligible saved practice papers with recorded questions and marks. AS and A Level data remain isolated.</div>", unsafe_allow_html=True)
