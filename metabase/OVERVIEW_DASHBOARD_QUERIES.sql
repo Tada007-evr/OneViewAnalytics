@@ -40,3 +40,11 @@ from public.v_overview_subtopic_performance
 where student_id = {{student_id}}
   and academic_level = {{academic_level}}
 order by subject, average_percentage;
+
+-- 6. Deterministic OneView Insight and Recommendation.
+select subject, insight_rule_id, insight_text,
+       recommendation_rule_id, recommendation_text
+from public.v_overview_insight_recommendation
+where student_id = {{student_id}}
+  and academic_level = {{academic_level}}
+order by case subject when 'Pure Mathematics' then 1 else 2 end;
