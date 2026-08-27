@@ -32,5 +32,6 @@ jobs:
           test -f sql/07_record_practice_brd_v1.sql
           test -f sql/08_release_hardening.sql
           test -f sql/09_overview_dashboard_brd_v1_6.sql
+          test -f sql/10_overview_insight_recommendation_bi.sql
           test -f metabase/OVERVIEW_DASHBOARD_QUERIES.sql
           test -f data/OneView_9709_Paper1_2025_Mapping-Score.xlsx
