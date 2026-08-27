@@ -23,7 +23,7 @@ jobs:
         run: python -m pip install -r requirements.txt
 
       - name: Compile Streamlit application
-        run: python -m py_compile app/main.py app/oneview_db.py app/overview_page.py app/record_page.py app/topic_page.py
+        run: python -m py_compile app/main.py app/oneview_db.py app/overview_page.py app/record_page.py app/topic_page.py app/bi_components.py
 
       - name: Validate required release files
         run: |
@@ -34,4 +34,5 @@ jobs:
           test -f sql/09_overview_dashboard_brd_v1_6.sql
           test -f sql/10_overview_insight_recommendation_bi.sql
           test -f metabase/OVERVIEW_DASHBOARD_QUERIES.sql
+          test -f metabase/POWER_BI_STYLE_GUIDE.md
           test -f data/OneView_9709_Paper1_2025_Mapping-Score.xlsx
