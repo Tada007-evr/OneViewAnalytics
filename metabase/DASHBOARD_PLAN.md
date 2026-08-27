@@ -1,52 +1,130 @@
 # OneView BI — Overview Dashboard v1.6
 
-The BI layer must use the same Supabase views as the Streamlit Overview page. Do not recreate formulas in Metabase. The authoritative semantic views are `v_bi_overview_dashboard`, `v_overview_attempts`, `v_overview_priority_areas`, and `v_overview_subtopic_performance`.
+The attached **OneView Overview Dashboard BRD + FSD MVP v1.6** is the visual and functional source of truth for this dashboard. Metabase/BI must use the same Supabase semantic views as the Streamlit Overview page and must reproduce the BRD layout, hierarchy, wording, states, and subject independence. Do not substitute a different Power BI/Metabase-style page structure.
 
 ## Visual language
 
-Match the approved OneView prototype: deep purple navigation/branding (`#3514A0` / `#5B35D5`), white cards, pale grey page background (`#F7F8FC`), dark navy text (`#211A4A`), rounded cards, green positive states, amber monitoring states, and red priority/needs-focus states. Keep Pure Mathematics and Statistics side-by-side and never combine their scores.
+Match the approved OneView prototype:
 
-## Required filters
+- dark purple left navigation
+- white dashboard cards on a pale neutral canvas
+- dark navy text with purple accents
+- compact rounded cards and restrained borders
+- green positive/improving states
+- amber/orange monitoring/on-track states
+- red high-priority/needs-focus states
+- no decorative gauge/donut/3-D/rainbow visual that is not required by the BRD
 
-- Student ID (locked to the authorized student when embedded)
-- Exam Level: `AS Level` / `A Level`
-- Subject panels: `Pure Mathematics` and `Statistics` remain independent
+## Required navigation
 
-## Overview cards per subject
+Exactly:
 
-Source: `v_bi_overview_dashboard`.
+- Overview
+- Record Practice Paper
+- Topic Analysis
 
-- Available Papers
-- Practice Target
-- Papers Completed
-- Remaining
-- Completion % and Target Status
-- Average Performance
-- Recent Score
-- Predicted Performance (only when `prediction_state = 'Sufficient'`)
-- Trend Status
+Overview is highlighted when selected.
+
+## Header
+
+One top row with:
+
+- Student name
+- AS Level / A Level selector
 - Last Updated
+- `+ Record Practice Paper`
 
-## Trend
+The selected level is the context filter for every Overview metric and visual.
 
-Source: `v_overview_attempts`. Line chart: `attempt_date` vs `percentage`, filtered to student + level + subject. Use the same purple line used by Streamlit.
+## Main Overview layout
 
-## Priority Improvement Areas
+Two equal side-by-side subject panels:
 
-Source: `v_overview_priority_areas`. Show only `priority_rank <= 3`. Columns: Topic, Subtopic, Average %, Priority. Priority is rule-based and must not be replaced by marks-lost ranking.
+- left: Pure Mathematics
+- right: Statistics
 
-## Topic Analysis
+Both panels must use the same card order and dimensions. Never combine subject results.
 
-Source: `v_overview_subtopic_performance`. Use the same average %, observation count, recent error frequency, and trend fields as the application.
+## Subject panel layout
+
+### Heading
+
+Show subject name/icon, Practice Target, Available Papers, and Edit Target.
+
+### KPI row
+
+Exactly three cards in this order:
+
+1. Papers Completed / Target
+2. Average Performance
+3. Recent Score
+
+Use runtime data. Use `More data needed` where an analytical metric is unavailable rather than presenting 0 as a performance result.
+
+### Predicted Performance
+
+One card below the KPI row, labelled exactly `Predicted Performance`. Display only a valid rule-based result from `v_bi_overview_dashboard`; otherwise show `More data needed`.
+
+### Target Practice
+
+Below the KPI/performance area show:
+
+- Target Type
+- Target
+- Completed
+- Remaining
+- % Completion
+- progress bar
+- Status
+- Available Papers
+- level/subject context
+
+`Edit Target` opens the target-setting popup in the student application. Minimum = 15; maximum = Available Papers.
+
+### Analysis row
+
+Left: Performance Trend line chart.
+
+Right: Priority Improvement Areas, top 3 only.
+
+Priority rows show Topic, Subtopic, Average %, and Priority. Use database rank and drill to Topic Analysis where embedding supports it.
+
+### Narrative row
+
+At the bottom of each subject panel:
+
+- OneView Insight
+- Recommendation
+
+Use `v_overview_insight_recommendation` verbatim; do not recreate templates or free-form text in BI.
+
+## Semantic sources
+
+Use only the shared production semantic layer for Overview BI:
+
+- `v_bi_overview_dashboard`
+- `v_overview_attempts`
+- `v_overview_priority_areas`
+- `v_overview_subtopic_performance`
+- `v_overview_insight_recommendation`
+
+Do not recalculate Prediction V1, trend, completion, priority, Insight, or Recommendation inside Metabase.
 
 ## Empty-state rules
 
-Do not display zero as a performance result when data is insufficient. Use `More data needed` / blank visual states for prediction, trend, priority, insight and recommendation according to the BRD.
+- Target not configured → `Not Set`
+- No valid performance → `More data needed`
+- Prediction insufficient → `More data needed`
+- Trend below threshold → chart may show available attempts, but status is `More data needed`
+- Fewer than 3 relevant subtopic observations → no weak priority classification
+- No fabricated insight or recommendation
 
-## Important current-data state
+## Current data state
 
-The verified database currently contains AS Level Pure Mathematics Paper 1 data. Statistics and A Level panels must remain visible but empty until verified source data is loaded. Do not fabricate inventory, scores or targets.
+The verified database currently contains AS Level Pure Mathematics source data. Statistics and A Level must remain visible in the correct BRD positions but show runtime empty states until verified source data exists. Never populate prototype values as production data.
 
-## Connection
+## BI build acceptance
 
-Connect Metabase Open Source to the Supabase Postgres database using Supabase **Database → Connect** credentials. Set the collection/dashboard permissions so student-facing embedded BI is filtered to the authenticated student. For the visual student product, Streamlit is the primary dashboard and already implements the prototype look and feel; Metabase is the secondary BI/exploration surface using the same views.
+The BI dashboard is accepted only when a screenshot at supported desktop resolution matches the BRD's overall structure and hierarchy: purple navigation, required header, two symmetric subject columns, three KPI cards, Predicted Performance, Target Practice, Trend + Priority, then Insight + Recommendation.
+
+Connect Metabase Open Source to Supabase Postgres using Supabase Database connection credentials. Student-facing access must be restricted to the authorized student. The Streamlit application remains the primary student interface; Metabase is a secondary BI surface and must visually follow the same BRD standard.
