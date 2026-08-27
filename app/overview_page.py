@@ -89,7 +89,7 @@ def edit_target(sb, user, level, subject, row):
             st.error(str(exc))
 
 
-def target_practice(sb, user, level, subject, row):
+def target_practice(sb, user, level, subject, row, show_edit=True):
     target = row.get("target_value")
     target_type = row.get("target_type") or "Not Set"
     completed = int(row.get("papers_completed") or 0)
@@ -98,16 +98,24 @@ def target_practice(sb, user, level, subject, row):
     available = int(row.get("available_papers") or 0)
     status = row.get("target_status") or "Not Set"
 
-    st.markdown("<div class='brd-section-title'>◎ TARGET PRACTICE <span title='The target is the intended number of papers to complete and cannot exceed available papers.'>ⓘ</span></div>", unsafe_allow_html=True)
-    st.markdown(f"<div class='brd-context'>{level} · {subject}</div>", unsafe_allow_html=True)
+    title_col, edit_col = st.columns([5.0, 1.2])
+    title_col.markdown(
+        "<div class='brd-section-title'>◎ TARGET PRACTICE "
+        "<span title='The target is the intended number of papers to complete and cannot exceed available papers.'>ⓘ</span></div>",
+        unsafe_allow_html=True,
+    )
+    title_col.markdown(f"<div class='brd-context'>{level} · {subject}</div>", unsafe_allow_html=True)
+    if show_edit and edit_col.button("✎ Edit Target", key=f"target_dashboard_edit_{level}_{subject}", use_container_width=True):
+        edit_target(sb, user, level, subject, row)
 
-    cols = st.columns([1.45, 1, 1, 1, 1.25])
+    cols = st.columns([1.45, 1, 1, 1, 1.25, 1.05])
     values = [
         ("TARGET TYPE", target_type),
         ("TARGET", "Not Set" if target is None or pd.isna(target) else str(int(target))),
         ("COMPLETED", str(completed)),
         ("REMAINING", "—" if remaining is None or pd.isna(remaining) else str(int(remaining))),
         ("% COMPLETION", "Not Set" if completion is None or pd.isna(completion) else f"{float(completion):.0f}%"),
+        ("STATUS", status),
     ]
     for col, (label, value) in zip(cols, values):
         col.markdown(
@@ -122,10 +130,30 @@ def target_practice(sb, user, level, subject, row):
         f"<div class='brd-target-footer'>"
         f"<span class='tag {tag_class(status)}'>{status}</span>"
         f"<span>Available Papers: <strong>{available}</strong></span>"
-        f"<span>Planning status only</span>"
+        f"<span>Planning status only — target changes never alter historical performance.</span>"
         f"</div>",
         unsafe_allow_html=True,
     )
+
+
+def target_practice_dashboard(sb, user, level):
+    st.markdown("<div class='brd-page-label'>TARGET PRACTICE</div>", unsafe_allow_html=True)
+    st.caption(
+        "Set and track the intended number of eligible practice papers for the selected exam level and subject. "
+        "This is a planning control and does not change historical attempts or academic performance metrics."
+    )
+    subject = st.segmented_control(
+        "Target Practice Subject",
+        ["Pure Mathematics", "Statistics"],
+        default=st.session_state.get("target_practice_subject", "Pure Mathematics"),
+        key="target_practice_subject",
+        label_visibility="collapsed",
+    )
+    if subject is None:
+        subject = "Pure Mathematics"
+    row = overview_row(sb, user.id, level, subject)
+    with st.container(border=True):
+        target_practice(sb, user, level, subject, row, show_edit=True)
 
 
 def trend_panel(sb, user, level, subject, status):
@@ -277,9 +305,6 @@ def subject_panel(sb, user, level, subject):
             )
         st.markdown("</div>", unsafe_allow_html=True)
 
-        with st.container(border=True):
-            target_practice(sb, user, level, subject, row)
-
         trend_col, priority_col = st.columns(2, gap="medium")
         with trend_col:
             trend_panel(sb, user, level, subject, row.get("trend_status") or "More data needed")
@@ -322,6 +347,9 @@ def render_overview(sb, user):
         subject_panel(sb, user, level, "Pure Mathematics")
     with stats:
         subject_panel(sb, user, level, "Statistics")
+
+    # BRD Part C requires Target Practice to be visible within Overview below the top KPI/performance area.
+    target_practice_dashboard(sb, user, level)
 
     st.markdown(
         "<div class='oneview-footer'>Analytics are based on eligible saved practice papers with recorded questions and marks. "
