@@ -10,52 +10,78 @@ st.set_page_config(page_title="OneView Learning Analytics", page_icon="◉", lay
 
 PURPLE = "#5B35D5"
 DARK = "#211A4A"
-MUTED = "#6B7280"
+MUTED = "#777A91"
 
 st.markdown(f"""
 <style>
 :root {{ --ov-purple:{PURPLE}; --ov-dark:{DARK}; --ov-muted:{MUTED}; }}
-.stApp {{background:linear-gradient(180deg,#F8F9FD 0%,#F5F6FA 100%);color:#20213A;}}
-[data-testid="stSidebar"] {{background:linear-gradient(180deg,#3514A0 0%,#27107D 100%);box-shadow:6px 0 24px rgba(36,18,112,.12);}}
-[data-testid="stSidebar"] * {{color:white;}}
-[data-testid="stSidebar"] [data-baseweb="radio"] label {{border-radius:10px;padding:10px 12px;margin:3px 0;transition:.18s ease;}}
-[data-testid="stSidebar"] [data-baseweb="radio"] label:hover {{background:rgba(255,255,255,.09);}}
-[data-testid="stSidebar"] [data-baseweb="radio"] label:has(input:checked) {{background:rgba(255,255,255,.17);box-shadow:inset 3px 0 0 rgba(255,255,255,.9);}}
-.block-container {{padding-top:1.25rem;max-width:1500px;padding-bottom:2rem;}}
-.ov-title {{font-size:1.36rem;font-weight:850;color:{DARK};line-height:1.2;}}
-.ov-kicker {{color:{PURPLE};font-weight:850;font-size:.78rem;letter-spacing:.075em;}}
-.ov-muted {{color:{MUTED};font-size:.82rem;}}
-.subject-title {{font-size:1rem;font-weight:900;color:{DARK};margin-bottom:2px;letter-spacing:.015em;}}
-.subject-icon {{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:9px;background:#EEE9FF;color:{PURPLE};font-weight:900;margin-right:6px;}}
-.level-pill {{display:inline-block;float:right;padding:5px 9px;border-radius:999px;background:#F2F0FB;color:{PURPLE};font-size:.7rem;font-weight:800;}}
-.metric-card {{position:relative;border:1px solid #E8E8F1;border-radius:14px;background:linear-gradient(180deg,#FFFFFF 0%,#FCFCFF 100%);padding:13px 14px;min-height:112px;box-shadow:0 5px 18px rgba(43,33,85,.055);transition:transform .15s ease,box-shadow .15s ease;overflow:hidden;}}
-.metric-card:hover {{transform:translateY(-1px);box-shadow:0 8px 24px rgba(43,33,85,.085);}}
-.metric-card:after {{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(180deg,{PURPLE},#9278EC);}}
-.metric-icon {{position:absolute;right:12px;top:10px;width:26px;height:26px;border-radius:8px;background:#F0ECFF;color:{PURPLE};display:flex;align-items:center;justify-content:center;font-weight:900;}}
-.metric-label {{color:#73758A;font-size:.69rem;font-weight:800;text-transform:uppercase;letter-spacing:.055em;}}
-.metric-value {{color:{DARK};font-size:1.4rem;font-weight:900;margin-top:7px;line-height:1.15;}}
-.metric-sub {{color:#777A91;font-size:.75rem;margin-top:5px;}}
-.tag {{display:inline-block;border-radius:999px;padding:4px 9px;font-size:.7rem;font-weight:850;}}
-.tag-purple {{background:#EEE9FF;color:{PURPLE};}}
-.tag-green {{background:#E8F8F1;color:#08764A;}}
-.tag-orange {{background:#FFF4E5;color:#A75B00;}}
-.tag-red {{background:#FCE9ED;color:#B32B43;}}
-div[data-testid="stVerticalBlockBorderWrapper"] {{border-color:#E6E6EF !important;border-radius:16px !important;background:white;box-shadow:0 7px 25px rgba(43,33,85,.045);}}
-.oneview-footer {{color:#8B8DA1;font-size:.72rem;text-align:center;padding:18px 0 2px;}}
-.priority-row {{padding:7px 0 4px;border-bottom:1px solid #F0EFF5;}}
-.priority-title {{font-size:.82rem;font-weight:800;color:{DARK};}}
-.priority-sub {{font-size:.74rem;color:#777A91;margin-top:1px;}}
-button[kind="primary"] {{background:linear-gradient(135deg,{PURPLE},#7556E0) !important;border-color:{PURPLE} !important;box-shadow:0 5px 14px rgba(91,53,213,.22);}}
-button[kind="primary"]:hover {{filter:brightness(.98);transform:translateY(-1px);}}
-.stProgress > div > div > div > div {{background-color:{PURPLE};}}
-.section-rule {{height:1px;background:linear-gradient(90deg,transparent,#E2E1EA,transparent);margin:.55rem 0 1rem;}}
-.dialog-available {{background:#F5F2FF;border:1px solid #E5DFFF;border-radius:12px;padding:10px 12px;margin:.4rem 0 .6rem;color:{DARK};display:flex;justify-content:space-between;}}
-.narrative-card {{border-radius:13px;padding:13px 14px;min-height:116px;border:1px solid #E8E8F1;background:#FCFCFF;}}
-.narrative-insight {{border-left:4px solid {PURPLE};}}
-.narrative-rec {{border-left:4px solid #18A66A;}}
-.narrative-kicker {{font-size:.68rem;font-weight:900;letter-spacing:.06em;color:{PURPLE};margin-bottom:5px;}}
-[data-testid="stMetric"] {{background:#FCFCFF;border:1px solid #ECEBF3;padding:8px 10px;border-radius:12px;}}
-[data-testid="stPlotlyChart"] {{border-radius:12px;overflow:hidden;}}
+.stApp {{ background:#F7F8FC; color:#20213A; }}
+.block-container {{ max-width:1480px; padding-top:1.1rem; padding-bottom:1.6rem; }}
+
+[data-testid="stSidebar"] {{ background:#31128F; border-right:0; }}
+[data-testid="stSidebar"] * {{ color:white; }}
+[data-testid="stSidebar"] [data-baseweb="radio"] label {{ border-radius:7px; padding:10px 11px; margin:2px 0; }}
+[data-testid="stSidebar"] [data-baseweb="radio"] label:has(input:checked) {{ background:#5633C8; }}
+
+.brd-student-name {{ font-size:1.1rem; font-weight:800; color:{DARK}; padding-top:.25rem; }}
+.brd-last-updated {{ text-align:right; color:{MUTED}; font-size:.76rem; padding:.2rem 0 .38rem; }}
+.brd-page-label {{ color:{PURPLE}; font-size:.75rem; font-weight:900; letter-spacing:.06em; margin:.55rem 0 .7rem; }}
+
+.brd-subject-title {{ font-size:.98rem; font-weight:900; color:{DARK}; display:flex; align-items:center; gap:7px; }}
+.subject-icon {{ width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; border-radius:7px; background:#EFEAFF; color:{PURPLE}; font-weight:900; }}
+.brd-subject-meta {{ color:{MUTED}; font-size:.72rem; margin:.26rem 0 .65rem; }}
+
+.brd-metric-card {{ position:relative; min-height:105px; background:#FFFFFF; border:1px solid #E5E6EF; border-radius:10px; padding:11px 12px; }}
+.brd-metric-icon {{ position:absolute; right:10px; top:9px; width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; color:{PURPLE}; background:#F2EEFF; font-weight:800; font-size:.78rem; }}
+.brd-metric-label {{ color:#777A91; font-size:.66rem; font-weight:800; letter-spacing:.035em; padding-right:26px; }}
+.brd-metric-value {{ color:{DARK}; font-size:1.32rem; font-weight:900; line-height:1.1; margin-top:9px; }}
+.brd-metric-sub {{ color:#7D8092; font-size:.71rem; margin-top:5px; }}
+
+.brd-prediction-card {{ background:#FCFCFF; border:1px solid #E8E8F1; border-radius:10px; padding:12px 13px; margin:.7rem 0; }}
+.brd-prediction-label {{ color:#6F7287; font-size:.66rem; font-weight:850; letter-spacing:.035em; }}
+.brd-prediction-value {{ color:{DARK}; font-size:1.16rem; font-weight:900; margin-top:4px; }}
+.brd-prediction-sub {{ color:#7C7F92; font-size:.72rem; margin-top:2px; }}
+.brd-empty {{ font-size:.92rem; }}
+
+.brd-section-title {{ color:{DARK}; font-size:.78rem; font-weight:900; letter-spacing:.025em; }}
+.brd-context {{ color:#828497; font-size:.69rem; margin:.08rem 0 .55rem; }}
+.brd-target-cell {{ min-height:70px; border-right:1px solid #ECECF3; padding:5px 8px; }}
+.brd-target-label {{ color:#838597; font-size:.61rem; font-weight:800; letter-spacing:.035em; }}
+.brd-target-value {{ color:{DARK}; font-size:1rem; font-weight:900; margin-top:7px; word-break:break-word; }}
+.brd-target-footer {{ display:flex; align-items:center; justify-content:space-between; gap:10px; color:#7E8092; font-size:.69rem; margin-top:3px; flex-wrap:wrap; }}
+
+.brd-subsection-title {{ color:{DARK}; font-size:.7rem; font-weight:900; letter-spacing:.035em; margin-bottom:.35rem; }}
+.brd-priority-row {{ padding:6px 0; border-bottom:1px solid #EEEFF4; }}
+.brd-priority-topic {{ color:{DARK}; font-size:.78rem; font-weight:850; }}
+.brd-priority-subtopic {{ color:#7A7D90; font-size:.7rem; margin-top:2px; }}
+.brd-priority-score {{ text-align:right; color:{DARK}; font-size:.78rem; font-weight:850; padding-top:5px; }}
+
+.brd-narrative {{ min-height:115px; border:1px solid #E7E7F0; border-radius:10px; padding:11px 12px; background:#FBFBFE; }}
+.brd-insight {{ border-left:3px solid {PURPLE}; }}
+.brd-recommendation {{ border-left:3px solid #5B35D5; }}
+.brd-narrative-title {{ color:{PURPLE}; font-size:.65rem; font-weight:900; letter-spacing:.035em; }}
+.brd-narrative-text {{ color:#404158; font-size:.77rem; line-height:1.45; margin-top:7px; }}
+.brd-rule {{ color:#9294A3; font-size:.62rem; margin-top:6px; }}
+
+.tag {{ display:inline-block; border-radius:999px; padding:3px 8px; font-size:.64rem; font-weight:850; }}
+.tag-purple {{ background:#EEE9FF; color:{PURPLE}; }}
+.tag-green {{ background:#E8F8F1; color:#08764A; }}
+.tag-orange {{ background:#FFF4E5; color:#A75B00; }}
+.tag-red {{ background:#FCE9ED; color:#B32B43; }}
+
+.dialog-available, .target-preview {{ display:flex; justify-content:space-between; align-items:center; background:#F5F2FF; border:1px solid #E3DCFF; border-radius:9px; padding:10px 12px; margin:.4rem 0 .65rem; color:{DARK}; }}
+.oneview-footer {{ color:#8B8DA1; font-size:.69rem; text-align:center; padding:15px 0 0; }}
+
+button[kind="primary"] {{ background:{PURPLE} !important; border-color:{PURPLE} !important; }}
+.stProgress > div > div > div > div {{ background-color:{PURPLE}; }}
+div[data-testid="stVerticalBlockBorderWrapper"] {{ border-color:#E4E5EE !important; border-radius:11px !important; background:white; box-shadow:none !important; }}
+[data-testid="stPlotlyChart"] {{ border-radius:8px; overflow:hidden; }}
+[data-testid="stMetric"] {{ background:transparent; border:0; padding:0; }}
+
+@media (max-width: 1100px) {{
+  .block-container {{ padding-left:1rem; padding-right:1rem; }}
+  .brd-metric-value {{ font-size:1.08rem; }}
+}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -91,7 +117,7 @@ def login():
     _, center, _ = st.columns([1, 1.25, 1])
     with center:
         with st.container(border=True):
-            st.markdown(f"<div class='ov-kicker'>◉ ONEVIEW</div><h2 style='color:{DARK};margin:.35rem 0'>Learning Analytics</h2>", unsafe_allow_html=True)
+            st.markdown(f"<div style='color:{PURPLE};font-weight:900'>◉ ONEVIEW</div><h2 style='color:{DARK};margin:.35rem 0'>Learning Analytics</h2>", unsafe_allow_html=True)
             st.caption("Sign in to view your Overview dashboard and record practice papers.")
             email = st.text_input("Email")
             password = st.text_input("Password", type="password")
@@ -114,9 +140,13 @@ def app():
     if not user:
         login()
         return
+
     pages = ["Overview", "Record Practice Paper", "Topic Analysis"]
     st.session_state.setdefault("nav", "Overview")
+    if st.session_state.nav not in pages:
+        st.session_state.nav = "Overview"
     name = student_name(sb, user)
+
     with st.sidebar:
         st.markdown("### ◉ ONEVIEW")
         st.caption("Learning Analytics")
@@ -135,6 +165,7 @@ def app():
             for key in ("user", "access_token", "refresh_token", "nav"):
                 st.session_state.pop(key, None)
             st.rerun()
+
     if st.session_state.nav == "Overview":
         render_overview(sb, user)
     elif st.session_state.nav == "Record Practice Paper":
