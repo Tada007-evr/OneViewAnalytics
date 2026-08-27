@@ -1,106 +1,209 @@
-# OneView BI — Power BI-quality visual design guide
+# OneView BI — BRD visual implementation standard
 
-This guide makes the Metabase implementation visually consistent with the OneView Streamlit Overview dashboard and the Overview BRD/FSD MVP v1.6. Metabase should use the same Supabase semantic views as the student UI so numbers never diverge.
+This document is the authoritative visual standard for the OneView BI dashboard. The attached **OneView Overview Dashboard BRD + FSD MVP v1.6** is the source of truth. BI must reproduce the BRD prototype's layout, hierarchy, wording, states, and interaction intent. Do not replace the BRD design with generic Power BI, Metabase, or dashboard conventions when they conflict with the prototype.
 
-## Brand system
+## 1. Non-negotiable visual principle
 
-- Primary: `#5B35D5`
-- Primary dark: `#3514A0`
-- Text: `#211A4A`
+The BI Overview must look and behave like the BRD Overview prototype:
+
+- deep purple OneView left navigation
+- white main dashboard canvas on a very light neutral background
+- student name at the top
+- AS Level / A Level selector at the top, never in left navigation
+- Last updated timestamp at the top
+- prominent `+ Record Practice Paper` action
+- Pure Mathematics on the left and Statistics on the right
+- both subject panels use the same structure and visual hierarchy
+- compact purple-accented cards, restrained borders, rounded corners, dark navy text
+- green for positive/improving states, amber/orange for monitoring/on-track states, red for high-priority/needs-focus states
+- no decorative visual that is not present in, or directly required by, the BRD
+
+Do **not** add speedometer gauges, decorative donuts, 3-D charts, rainbow palettes, unrelated KPI visuals, or extra navigation simply to make the dashboard look more like another BI product.
+
+## 2. Required page structure
+
+Use a desktop/laptop layout matching Figure 1 of the BRD.
+
+### Left navigation
+
+Exactly these MVP destinations:
+
+1. Overview — highlighted when selected
+2. Record Practice Paper
+3. Topic Analysis
+
+Student identity/logout remains at the bottom of the navigation area where supported.
+
+### Header
+
+One horizontal header row containing:
+
+- Student name
+- `AS Level | A Level` selector
+- Last updated timestamp
+- `+ Record Practice Paper` action
+
+The selected level filters **every** visual and metric on the Overview.
+
+### Subject panels
+
+Use two equal-width side-by-side panels:
+
+- Left: `PURE MATHEMATICS`
+- Right: `STATISTICS`
+
+Never combine the subjects into a total score or blended performance metric.
+
+## 3. Exact visual hierarchy inside each subject panel
+
+### Subject heading row
+
+Show:
+
+- subject icon/name
+- `Practice Target: <value> papers`
+- `Available Papers: <value>`
+- `Edit Target` action
+
+If target is not configured, display `Not Set` rather than assuming a default.
+
+### KPI row
+
+Exactly three primary KPI cards:
+
+1. `PAPERS COMPLETED`
+   - main value: Completed / Target
+   - supporting value: completion percentage when target exists
+
+2. `AVERAGE PERFORMANCE`
+   - main value: average score/marks where available
+   - supporting value: average percentage
+   - use `More data needed` rather than a fake 0 when no valid attempt exists
+
+3. `RECENT SCORE`
+   - main value: most recent valid score / relevant maximum marks
+   - supporting value: recent percentage
+   - use `More data needed` where appropriate
+
+### Predicted Performance
+
+A single compact card below the KPI row labelled exactly:
+
+`PREDICTED PERFORMANCE`
+
+Do not display `Prediction V1` as a user-facing label.
+
+When sufficient data exists, show the runtime-derived predicted score/percentage. When insufficient, show `More data needed`. Do not show a zero prediction.
+
+### Target Practice panel
+
+Display within Overview below the KPI/performance area, consistent with Figure 2.
+
+Show:
+
+- Target Type
+- Target
+- Completed
+- Remaining
+- % Completion
+- progress bar
+- Status
+- Available Papers
+- selected Level + Subject context
+- target explanation/info tooltip
+
+Status labels:
+
+- 0–39% `Behind Target`
+- 40–74% `On Track`
+- 75–99% `Ahead of Target`
+- 100% `Target Achieved`
+
+The panel is planning-only and must not visually imply academic readiness.
+
+### Analysis row
+
+Left half:
+
+`PERFORMANCE TREND`
+
+- compact line chart
+- percentage y-axis
+- valid recent attempts only
+- selected student + level + subject only
+- status: Improving / Stable / Needs Focus / More data needed
+- chart may still show available attempts even if the minimum trend threshold is not met
+
+Right half:
+
+`PRIORITY IMPROVEMENT AREAS`
+
+- top 3 only
+- each row shows Topic, Subtopic, performance %, and Priority
+- priorities: High / Medium / Monitor
+- ranked according to the database rule engine, not marks-lost sorting
+- clickable/drill-through to Topic Analysis where the BI platform supports it
+- if fewer than 3 priorities qualify, show only those available
+- if none qualifies because of insufficient data, show `More data needed`
+
+### Bottom narrative row
+
+Two equal cards:
+
+- `ONEVIEW INSIGHT`
+- `RECOMMENDATION`
+
+Use only deterministic text supplied by `v_overview_insight_recommendation`. Do not generate alternative wording in BI.
+
+## 4. Edit Target popup
+
+The BI/embedded application must retain the BRD Edit Target behaviour:
+
+- Trigger: `Edit Target`
+- Action: popup/modal
+- show Available Papers inside popup
+- Target Type: configurable presets plus Custom
+- minimum custom target = 15 past papers
+- maximum = Available Papers
+- whole-number input only
+- invalid target is rejected without modifying stored target
+- target persists independently by student + level + subject
+
+If Available Papers is less than 15, show the BRD-compliant unavailable/validation state rather than permitting an invalid target.
+
+## 5. Visual palette
+
+Use the OneView prototype palette consistently:
+
+- Navigation dark purple: `#3514A0`
+- Primary accent purple: `#5B35D5`
+- Main text dark navy: `#211A4A`
 - Muted text: `#6B7280`
 - Canvas: `#F7F8FC`
-- Card: `#FFFFFF`
-- Grid/border: `#E8E8F1`
+- Cards: `#FFFFFF`
+- Borders/grid: `#E8E8F1`
 - Positive: `#12A66A`
-- Warning: `#E49A27`
-- Critical: `#D84B64`
+- Warning/monitor: `#E49A27`
+- Critical/high/needs-focus: `#D84B64`
 
-Use white cards on a very light gray canvas, 12–16px visual corner radius where the BI platform supports it, restrained borders, generous white space, and minimal grid lines.
+Use restrained rounding and subtle borders/shadows. The visual intent is clean, compact, student-friendly, and aligned with the prototype—not a generic corporate BI report.
 
-## Dashboard canvas
+## 6. Required filters and security
 
-Desktop target: 1440px wide. Use a 12-column dashboard grid.
+Student-facing BI must be scoped to the authorized student. Dashboard context must include:
 
-Header row:
-- Student name
-- Exam Level filter (AS Level / A Level)
-- Last Updated
-- Record Practice Paper link/action where embedding permits
+- `student_id` — fixed/hidden for authenticated student-facing embedding
+- `academic_level` — visible AS/A selector
 
-Main content:
-- Pure Mathematics section on the left six columns
-- Statistics section on the right six columns
-- identical visual structure for both subjects
+Pure Mathematics and Statistics are displayed simultaneously as independent subject panels, not chosen through a single subject filter in the primary Overview.
 
-## Visual hierarchy per subject
+Optional diagnostic/admin BI may expose Year, Session, Paper, Topic, and Subtopic filters, but those must not change the student-facing Overview layout.
 
-### Row A — KPI cards
+## 7. Semantic sources
 
-1. Papers Completed / Target
-2. Average Performance
-3. Recent Score
+Use Supabase as the single calculation/semantic layer. Do not reimplement formulas in Metabase/BI.
 
-Cards should have one primary number, a short supporting sentence, and no unnecessary chart chrome.
-
-### Row B — advanced KPI visuals
-
-4. Average Performance gauge
-   - 0–100% scale
-   - single accent bar
-   - avoid speedometer styling with excessive color
-
-5. Predicted Performance bullet/progress chart
-   - predicted percentage as the main bar
-   - recent score percentage as a reference marker
-   - show `More data needed` instead of a zero bar when the prediction threshold is not met
-
-### Row C — Target Practice
-
-6. Completion donut
-   - completed / target
-   - central completion percentage
-   - adjacent cards for Target, Available, Completed, Remaining and status
-
-### Row D — analysis
-
-7. Performance Trend
-   - line chart with markers
-   - last 8 attempts
-   - y-axis fixed 0–100%
-   - compact date x-axis
-   - status displayed separately: Improving / Stable / Needs Focus / More data needed
-
-8. Priority Improvement Areas
-   - horizontal bar chart
-   - top 3 only
-   - sort by documented priority rank
-   - conditional colors: High red, Medium amber, Monitor purple
-   - tooltip: topic, subtopic, percentage, priority, observation count
-
-### Row E — narrative cards
-
-9. OneView Insight
-10. Recommendation
-
-Use the approved deterministic text from `v_overview_insight_recommendation`; do not recreate rule logic in Metabase.
-
-## Filters
-
-Dashboard filters:
-- `student_id` — required, hidden from normal student-facing embedded use if identity is supplied by the application
-- `academic_level` — prominent segmented/dropdown filter
-
-Optional diagnostic BI filters:
-- Subject
-- Year
-- Session
-- Paper code
-- Topic
-- Subtopic
-
-## Semantic sources
-
-Use only these production views for Overview BI:
+Primary sources:
 
 - `v_bi_overview_dashboard`
 - `v_overview_attempts`
@@ -108,29 +211,50 @@ Use only these production views for Overview BI:
 - `v_overview_subtopic_performance`
 - `v_overview_insight_recommendation`
 
-Do not reimplement Prediction V1, trend, target completion, priorities, Insight or Recommendation inside BI questions. Supabase is the semantic calculation layer.
+The same student/level/subject inputs must reconcile exactly between BI, Streamlit Overview, and Topic Analysis.
 
-## Interaction behaviour
+## 8. Empty and insufficient-data states
 
-- Exam Level refreshes every visual.
-- Pure Mathematics and Statistics remain independent.
-- Clicking a priority should link/drill to Topic Analysis where embedding supports URL parameters.
-- Empty states must say `More data needed` or `Not Set`; never convert null analytical states to 0%.
-- Tooltips should explain context without overwhelming the student.
+Never convert analytical null/insufficient states to `0%` if that could imply actual performance.
 
-## Power BI-quality principles
+Required copy includes:
 
-- Use visual hierarchy instead of many equally prominent charts.
-- Keep one dominant message per card.
-- Favor bullet charts, lines, horizontal ranking bars and donuts over dense tables.
-- Keep percentages on a consistent 0–100 scale.
-- Remove legends when the title already identifies a single series.
-- Use direct labels for important last values.
-- Use conditional color only where it communicates meaning.
-- Keep charts aligned across the Pure Mathematics and Statistics columns.
-- Avoid pie charts except the single Target Practice completion donut.
-- Avoid 3D charts, rainbow palettes, excessive borders, and decorative gauges.
+- `Not Set` for an unset target
+- `More data needed` for insufficient prediction/trend/priority/insight/recommendation states
+- `0` Completed is valid when there are no attempts
+- Available Papers may still display with no attempts
 
-## Dashboard queries
+No weakness classification is allowed for subtopics with fewer than 3 relevant observations.
 
-Use `metabase/OVERVIEW_DASHBOARD_QUERIES.sql` as the source query pack. All KPI and analytical numbers must reconcile exactly to Streamlit for the same student and level.
+## 9. Data and rule integrity
+
+BI is a presentation layer over the Supabase rule engine. It must preserve:
+
+- AS and A Level isolation
+- Pure Mathematics and Statistics independence
+- completion against Practice Target, not Available Papers
+- Prediction V1 sufficiency and weighting from the semantic layer
+- exact trend result from the semantic layer
+- priority classification/tie-break output from the semantic layer
+- exactly one deterministic Insight and Recommendation per subject
+- no duplicate attempt count after corrections
+
+## 10. BRD visual acceptance checklist
+
+A BI dashboard is visually acceptable only if all are true:
+
+- left navigation matches the MVP navigation
+- top header matches the BRD structure
+- Pure Mathematics and Statistics are side-by-side
+- both subject panels are visually symmetric
+- the three KPI cards appear in the same order
+- Predicted Performance appears below the KPI row
+- Target Practice appears below the KPI/performance area
+- Performance Trend is left of Priority Improvement Areas
+- Insight and Recommendation are at the bottom of each subject panel
+- Edit Target is visible and opens a popup
+- no additional decorative visualization changes the hierarchy
+- all prototype values are replaced by runtime data
+- empty states follow BRD wording
+
+This standard supersedes the earlier generic “Power BI-quality” styling guidance wherever that guidance differed from the BRD prototype.
