@@ -192,26 +192,24 @@ def narrative_cards(sb, user, level, subject):
     )
     row = rows.iloc[0] if not rows.empty else {}
     insight = row.get("insight_text") if hasattr(row, "get") else None
-    insight_rule = row.get("insight_rule_id") if hasattr(row, "get") else None
+    insight_rule = row.get("insight_rule_id") if hasattr(row, "get") else "INS-05"
     recommendation = row.get("recommendation_text") if hasattr(row, "get") else None
-    recommendation_rule = row.get("recommendation_rule_id") if hasattr(row, "get") else None
+    recommendation_rule = row.get("recommendation_rule_id") if hasattr(row, "get") else "REC-06"
 
     left, right = st.columns(2, gap="medium")
     with left:
         st.markdown(
-            f"<div class='brd-narrative brd-insight'>"
+            f"<div class='brd-narrative brd-insight' title='Rule: {insight_rule or 'INS-05'}'>"
             f"<div class='brd-narrative-title'>◉ ONEVIEW INSIGHT</div>"
             f"<div class='brd-narrative-text'>{insight or 'More practice data is needed before OneView can reliably assess this area.'}</div>"
-            f"<div class='brd-rule'>{insight_rule or 'INS-05'}</div>"
             f"</div>",
             unsafe_allow_html=True,
         )
     with right:
         st.markdown(
-            f"<div class='brd-narrative brd-recommendation'>"
+            f"<div class='brd-narrative brd-recommendation' title='Rule: {recommendation_rule or 'REC-06'}'>"
             f"<div class='brd-narrative-title'>✎ RECOMMENDATION</div>"
             f"<div class='brd-narrative-text'>{recommendation or 'More relevant practice required; no weakness recommendation yet.'}</div>"
-            f"<div class='brd-rule'>{recommendation_rule or 'REC-06'}</div>"
             f"</div>",
             unsafe_allow_html=True,
         )
@@ -266,7 +264,6 @@ def subject_panel(sb, user, level, subject):
             predicted_score = float(row.get("predicted_score") or 0)
             max_marks = float(row.get("predicted_max_marks") or 0)
             predicted_pct = float(row.get("predicted_percentage") or 0)
-            # BRD prototype displays an illustrative range; runtime estimate remains deterministic.
             st.markdown(
                 f"<div class='brd-prediction-value'>{predicted_score:.0f} / {max_marks:.0f}</div>"
                 f"<div class='brd-prediction-sub'>{predicted_pct:.1f}% · Rule-based forecast</div>",
