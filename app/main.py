@@ -14,32 +14,48 @@ MUTED = "#6B7280"
 
 st.markdown(f"""
 <style>
-.stApp {{background:#F7F8FC;color:#20213A;}}
-[data-testid="stSidebar"] {{background:linear-gradient(180deg,#3514A0 0%,#27107D 100%);}}
+:root {{ --ov-purple:{PURPLE}; --ov-dark:{DARK}; --ov-muted:{MUTED}; }}
+.stApp {{background:linear-gradient(180deg,#F8F9FD 0%,#F5F6FA 100%);color:#20213A;}}
+[data-testid="stSidebar"] {{background:linear-gradient(180deg,#3514A0 0%,#27107D 100%);box-shadow:6px 0 24px rgba(36,18,112,.12);}}
 [data-testid="stSidebar"] * {{color:white;}}
-[data-testid="stSidebar"] [data-baseweb="radio"] label {{border-radius:10px;padding:9px 10px;margin:2px 0;}}
-[data-testid="stSidebar"] [data-baseweb="radio"] label:has(input:checked) {{background:rgba(255,255,255,.16);}}
-.block-container {{padding-top:1.25rem;max-width:1450px;}}
-.ov-title {{font-size:1.25rem;font-weight:800;color:{DARK};}}
-.ov-kicker {{color:{PURPLE};font-weight:800;font-size:.83rem;letter-spacing:.02em;}}
-.ov-muted {{color:{MUTED};font-size:.84rem;}}
-.subject-title {{font-size:1rem;font-weight:900;color:{DARK};margin-bottom:2px;}}
-.metric-card {{border:1px solid #E9E8F1;border-radius:12px;background:white;padding:12px 13px;min-height:104px;}}
-.metric-label {{color:#73758A;font-size:.72rem;font-weight:750;text-transform:uppercase;letter-spacing:.03em;}}
-.metric-value {{color:{DARK};font-size:1.42rem;font-weight:900;margin-top:6px;}}
-.metric-sub {{color:#777A91;font-size:.77rem;margin-top:2px;}}
-.tag {{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:800;}}
+[data-testid="stSidebar"] [data-baseweb="radio"] label {{border-radius:10px;padding:10px 12px;margin:3px 0;transition:.18s ease;}}
+[data-testid="stSidebar"] [data-baseweb="radio"] label:hover {{background:rgba(255,255,255,.09);}}
+[data-testid="stSidebar"] [data-baseweb="radio"] label:has(input:checked) {{background:rgba(255,255,255,.17);box-shadow:inset 3px 0 0 rgba(255,255,255,.9);}}
+.block-container {{padding-top:1.25rem;max-width:1500px;padding-bottom:2rem;}}
+.ov-title {{font-size:1.36rem;font-weight:850;color:{DARK};line-height:1.2;}}
+.ov-kicker {{color:{PURPLE};font-weight:850;font-size:.78rem;letter-spacing:.075em;}}
+.ov-muted {{color:{MUTED};font-size:.82rem;}}
+.subject-title {{font-size:1rem;font-weight:900;color:{DARK};margin-bottom:2px;letter-spacing:.015em;}}
+.subject-icon {{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:9px;background:#EEE9FF;color:{PURPLE};font-weight:900;margin-right:6px;}}
+.level-pill {{display:inline-block;float:right;padding:5px 9px;border-radius:999px;background:#F2F0FB;color:{PURPLE};font-size:.7rem;font-weight:800;}}
+.metric-card {{position:relative;border:1px solid #E8E8F1;border-radius:14px;background:linear-gradient(180deg,#FFFFFF 0%,#FCFCFF 100%);padding:13px 14px;min-height:112px;box-shadow:0 5px 18px rgba(43,33,85,.055);transition:transform .15s ease,box-shadow .15s ease;overflow:hidden;}}
+.metric-card:hover {{transform:translateY(-1px);box-shadow:0 8px 24px rgba(43,33,85,.085);}}
+.metric-card:after {{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(180deg,{PURPLE},#9278EC);}}
+.metric-icon {{position:absolute;right:12px;top:10px;width:26px;height:26px;border-radius:8px;background:#F0ECFF;color:{PURPLE};display:flex;align-items:center;justify-content:center;font-weight:900;}}
+.metric-label {{color:#73758A;font-size:.69rem;font-weight:800;text-transform:uppercase;letter-spacing:.055em;}}
+.metric-value {{color:{DARK};font-size:1.4rem;font-weight:900;margin-top:7px;line-height:1.15;}}
+.metric-sub {{color:#777A91;font-size:.75rem;margin-top:5px;}}
+.tag {{display:inline-block;border-radius:999px;padding:4px 9px;font-size:.7rem;font-weight:850;}}
 .tag-purple {{background:#EEE9FF;color:{PURPLE};}}
 .tag-green {{background:#E8F8F1;color:#08764A;}}
 .tag-orange {{background:#FFF4E5;color:#A75B00;}}
 .tag-red {{background:#FCE9ED;color:#B32B43;}}
-div[data-testid="stVerticalBlockBorderWrapper"] {{border-color:#E7E7F0 !important;border-radius:14px !important;background:white;}}
-.oneview-footer {{color:#8B8DA1;font-size:.73rem;text-align:center;padding:16px 0 2px;}}
-.priority-row {{padding:8px 0 3px;border-bottom:1px solid #F0EFF5;}}
-.priority-title {{font-size:.84rem;font-weight:800;color:{DARK};}}
-.priority-sub {{font-size:.76rem;color:#777A91;}}
-button[kind="primary"] {{background:{PURPLE} !important;border-color:{PURPLE} !important;}}
+div[data-testid="stVerticalBlockBorderWrapper"] {{border-color:#E6E6EF !important;border-radius:16px !important;background:white;box-shadow:0 7px 25px rgba(43,33,85,.045);}}
+.oneview-footer {{color:#8B8DA1;font-size:.72rem;text-align:center;padding:18px 0 2px;}}
+.priority-row {{padding:7px 0 4px;border-bottom:1px solid #F0EFF5;}}
+.priority-title {{font-size:.82rem;font-weight:800;color:{DARK};}}
+.priority-sub {{font-size:.74rem;color:#777A91;margin-top:1px;}}
+button[kind="primary"] {{background:linear-gradient(135deg,{PURPLE},#7556E0) !important;border-color:{PURPLE} !important;box-shadow:0 5px 14px rgba(91,53,213,.22);}}
+button[kind="primary"]:hover {{filter:brightness(.98);transform:translateY(-1px);}}
 .stProgress > div > div > div > div {{background-color:{PURPLE};}}
+.section-rule {{height:1px;background:linear-gradient(90deg,transparent,#E2E1EA,transparent);margin:.55rem 0 1rem;}}
+.dialog-available {{background:#F5F2FF;border:1px solid #E5DFFF;border-radius:12px;padding:10px 12px;margin:.4rem 0 .6rem;color:{DARK};display:flex;justify-content:space-between;}}
+.narrative-card {{border-radius:13px;padding:13px 14px;min-height:116px;border:1px solid #E8E8F1;background:#FCFCFF;}}
+.narrative-insight {{border-left:4px solid {PURPLE};}}
+.narrative-rec {{border-left:4px solid #18A66A;}}
+.narrative-kicker {{font-size:.68rem;font-weight:900;letter-spacing:.06em;color:{PURPLE};margin-bottom:5px;}}
+[data-testid="stMetric"] {{background:#FCFCFF;border:1px solid #ECEBF3;padding:8px 10px;border-radius:12px;}}
+[data-testid="stPlotlyChart"] {{border-radius:12px;overflow:hidden;}}
 </style>
 """, unsafe_allow_html=True)
 
