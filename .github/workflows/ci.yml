@@ -25,6 +25,9 @@ jobs:
       - name: Compile Streamlit application
         run: python -m py_compile app/main.py app/oneview_db.py app/overview_page.py app/record_page.py app/topic_page.py app/bi_components.py
 
+      - name: Run Record Practice Paper unit tests
+        run: python -m unittest tests/test_record_practice.py -v
+
       - name: Validate required release files
         run: |
           test -f sql/01_schema.sql
@@ -33,6 +36,7 @@ jobs:
           test -f sql/08_release_hardening.sql
           test -f sql/09_overview_dashboard_brd_v1_6.sql
           test -f sql/10_overview_insight_recommendation_bi.sql
+          test -f sql/11_record_practice_paper_brd_v1_0.sql
           test -f metabase/OVERVIEW_DASHBOARD_QUERIES.sql
           test -f metabase/POWER_BI_STYLE_GUIDE.md
           test -f data/OneView_9709_Paper1_2025_Mapping-Score.xlsx
