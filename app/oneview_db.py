@@ -154,6 +154,14 @@ def build_grid(sb, paper_id, attempt_id=None):
     return pd.DataFrame(rows)
 
 
+def calculate_practice_result(grid, total_marks=75):
+    numeric = pd.to_numeric(grid["Marks Lost"], errors="coerce")
+    total_lost = float(numeric.fillna(0).sum())
+    total_score = float(total_marks) - total_lost
+    percentage = total_score / float(total_marks) * 100 if total_marks else 0
+    return total_lost, total_score, percentage
+
+
 def validate_grid(grid, total_marks=75):
     errors = []
     total_lost = 0
@@ -195,9 +203,7 @@ def validate_grid(grid, total_marks=75):
 
 def save_attempt(sb, user, paper, grid, date_completed=None, attempt_id=None):
     maximum = float(paper["total_marks"])
-    total_lost = float(pd.to_numeric(grid["Marks Lost"], errors="coerce").sum())
-    total_score = maximum - total_lost
-    percentage = total_score / maximum * 100 if maximum else 0
+    total_lost, total_score, percentage = calculate_practice_result(grid, maximum)
     completed_on = date_completed or date.today()
 
     if not attempt_id:
