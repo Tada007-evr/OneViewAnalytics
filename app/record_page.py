@@ -3,7 +3,7 @@ from datetime import date
 import pandas as pd
 import streamlit as st
 
-from oneview_db import ERROR_TYPES, build_grid, get_df, save_attempt, student_name, validate_grid
+from oneview_db import ERROR_TYPES, build_grid, calculate_practice_result, get_df, save_attempt, student_name, validate_grid
 
 PAPER_TYPES = {
     "AS": {
@@ -69,7 +69,6 @@ def _practice_styles():
         .rp-subtitle{font-size:.79rem;color:#7B7D90;margin:.15rem 0 1rem}
         .rp-header-name{font-size:.9rem;font-weight:850;color:#211A4A;padding-top:.45rem}
         .rp-last{font-size:.72rem;color:#777A91;text-align:right;padding:.25rem 0 .35rem}
-        .rp-section{background:#fff;border:1px solid #E5E6EF;border-radius:10px;padding:14px 16px;margin:.55rem 0 .9rem}
         .rp-section-title{font-size:.82rem;font-weight:900;color:#5B35D5;letter-spacing:.01em;margin-bottom:.15rem}
         .rp-section-help{font-size:.7rem;color:#85879A;margin-bottom:.75rem}
         .rp-table-head{background:#F2F0FF;border:1px solid #E1DCFF;border-radius:7px;padding:7px 4px;font-size:.64rem;font-weight:900;color:#3D326D;text-align:left;margin-bottom:2px}
@@ -217,9 +216,18 @@ def _render_question_table(grid, prefix):
             st.session_state[error_key] = "No Error"
             error_type = cols[6].selectbox("Error Type", ["No Error"], key=error_key, disabled=True, label_visibility="collapsed")
         elif lost_value is not None and lost_value > 0:
-            if st.session_state.get(error_key) not in ERROR_CHOICES:
-                st.session_state[error_key] = existing_error if existing_error in ERROR_CHOICES else ERROR_CHOICES[0]
-            error_type = cols[6].selectbox("Error Type", ERROR_CHOICES, key=error_key, label_visibility="collapsed")
+            if st.session_state.get(error_key) == "No Error":
+                st.session_state.pop(error_key, None)
+            if error_key not in st.session_state and existing_error in ERROR_CHOICES:
+                st.session_state[error_key] = existing_error
+            error_type = cols[6].selectbox(
+                "Error Type",
+                ERROR_CHOICES,
+                index=None,
+                key=error_key,
+                placeholder="Select Error Type",
+                label_visibility="collapsed",
+            )
         else:
             st.session_state.pop(error_key, None)
             error_type = None
@@ -233,10 +241,7 @@ def _render_question_table(grid, prefix):
 
 
 def _results_summary(work):
-    numeric = pd.to_numeric(work["Marks Lost"], errors="coerce")
-    total_lost = float(numeric.fillna(0).sum())
-    total_score = TOTAL_MARKS_MVP - total_lost
-    percentage = total_score / TOTAL_MARKS_MVP * 100
+    total_lost, total_score, percentage = calculate_practice_result(work, TOTAL_MARKS_MVP)
     st.markdown("<div class='rp-section-title'>◷ Results Summary</div>", unsafe_allow_html=True)
     cards = st.columns(4)
     values = [
