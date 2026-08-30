@@ -274,8 +274,8 @@ def subject_panel(sb, user, level, subject):
         with m2:
             metric_card(
                 "AVERAGE PERFORMANCE",
-                "More data needed" if avg is None or pd.isna(avg) else f"{fmt(row.get('average_score'))} marks",
-                "No valid attempts" if avg is None or pd.isna(avg) else f"{float(avg):.1f}%",
+                "More data needed" if avg is None or pd.isna(avg) else f"{fmt(row.get('average_score'))}  {float(avg):.1f}%",
+                "" if avg is not None and not pd.isna(avg) else "No valid attempts",
                 "✦",
             )
         with m3:
