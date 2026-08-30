@@ -17,7 +17,6 @@ st.set_page_config(
 )
 
 PURPLE = "#5A32D5"
-PURPLE_DARK = "#281278"
 DARK = "#17163A"
 MUTED = "#7B7D91"
 BORDER = "#E8E8F0"
@@ -31,7 +30,7 @@ html,body,[class*="css"]{{font-family:Inter,Arial,sans-serif;}}
 .block-container{{max-width:1310px;padding:.35rem 1rem 1.25rem;}}
 header[data-testid="stHeader"]{{background:transparent;height:0;}}
 
-/* LEFT NAVIGATION — proportions and visual treatment from finalized prototype */
+/* BRD LEFT NAVIGATION */
 [data-testid="stSidebar"]{{
   background:linear-gradient(180deg,#25106D 0%,#2B147E 48%,#21106B 100%);
   border-right:0;
@@ -40,34 +39,37 @@ header[data-testid="stHeader"]{{background:transparent;height:0;}}
 [data-testid="stSidebar"]>div:first-child{{width:174px!important;padding:0!important;}}
 [data-testid="stSidebar"] [data-testid="stSidebarContent"]{{padding:.72rem .65rem .8rem!important;}}
 [data-testid="stSidebar"] *{{color:white;}}
-.nav-brand-wrap{{height:57px;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);margin:-.1rem -.65rem .65rem;padding:0 .75rem;}}
+.nav-brand-wrap{{height:57px;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);margin:-.1rem -.65rem .72rem;padding:0 .75rem;}}
 .nav-logo{{width:23px;height:23px;border-radius:50%;border:1.5px solid #CFC9FF;display:inline-flex;align-items:center;justify-content:center;margin-right:7px;font-size:.72rem;}}
 .nav-brand{{font-size:.78rem;font-weight:900;letter-spacing:.035em;}}
-.nav-label{{font-size:.56rem;color:#BEB8E5;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:.35rem .32rem .3rem;}}
+.nav-stack{{display:flex;flex-direction:column;gap:4px;}}
 [data-testid="stSidebar"] .stButton{{margin:0!important;}}
 [data-testid="stSidebar"] .stButton>button{{
-  width:100%;min-height:43px;border:0;border-radius:7px;box-shadow:none;
-  justify-content:flex-start;text-align:left;font-size:.68rem;font-weight:650;
-  padding:.45rem .58rem;margin:.06rem 0;color:#F5F3FF;background:transparent;
+  width:100%;height:43px;min-height:43px;border:0;border-radius:7px;box-shadow:none;
+  justify-content:flex-start;text-align:left;font-size:.67rem;font-weight:650;
+  padding:0 .58rem;margin:0;color:#F5F3FF;background:transparent;line-height:1.1;
 }}
+[data-testid="stSidebar"] .stButton>button p{{margin:0!important;white-space:normal;text-align:left;}}
 [data-testid="stSidebar"] .stButton>button:hover{{background:#38208C;color:white;border:0;}}
 [data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:#5B35D5!important;color:white!important;border:0!important;box-shadow:0 4px 12px rgba(91,53,213,.28)!important;}}
-.nav-user-block{{border-top:1px solid rgba(255,255,255,.09);padding:.72rem .18rem .2rem;margin-top:.35rem;}}
-.nav-switch{{font-size:.54rem;color:#BDB7E2;margin-bottom:.22rem;}}
-.nav-user{{font-size:.66rem;font-weight:850;color:white;line-height:1.25;}}
-.nav-level{{font-size:.54rem;color:#CBC6EB;margin-top:.18rem;}}
+.nav-spacer{{height:34vh;}}
+.nav-user-block{{border-top:1px solid rgba(255,255,255,.10);padding:.78rem .18rem .38rem;}}
+.nav-avatar-row{{display:flex;align-items:center;gap:8px;}}
+.nav-avatar{{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#684BE1;color:#fff;font-size:.56rem;font-weight:900;flex:0 0 auto;}}
+.nav-user-meta{{min-width:0;}}
+.nav-user{{font-size:.65rem;font-weight:850;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
+.nav-level{{font-size:.53rem;color:#CBC6EB;margin-top:.18rem;}}
+.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.08);padding-top:.42rem;margin-top:.18rem;}}
 
-/* GLOBAL HEADER — identical on every MVP page */
-.global-header{{background:#fff;border-bottom:1px solid {BORDER};margin:-.35rem -1rem .75rem;padding:.55rem 1rem .48rem;}}
+/* GLOBAL HEADER */
 .global-student{{font-size:.72rem;font-weight:850;color:{DARK};padding-top:.43rem;white-space:nowrap;}}
 .global-label{{font-size:.52rem;color:#8B8D9F;font-weight:750;margin-bottom:.12rem;text-align:right;}}
 .global-updated{{font-size:.56rem;color:#888A9B;text-align:right;white-space:nowrap;padding-top:.42rem;}}
-[data-testid="stSegmentedControl"]{{margin-top:0!important;}}
 [data-testid="stSegmentedControl"] button{{font-size:.57rem!important;min-height:28px!important;padding:.13rem .5rem!important;border-radius:4px!important;}}
 [data-testid="stSegmentedControl"] [aria-pressed="true"]{{background:{PURPLE}!important;color:white!important;}}
 .global-action button{{font-size:.57rem!important;min-height:30px!important;padding:.2rem .55rem!important;}}
 
-/* OVERVIEW PROTOTYPE VISUAL SYSTEM */
+/* SHARED BRD VISUAL SYSTEM */
 .brd-page-label{{display:none;}}
 div[data-testid="stVerticalBlockBorderWrapper"]{{border-color:{BORDER}!important;border-radius:7px!important;background:#fff;box-shadow:0 1px 3px rgba(28,25,64,.035)!important;}}
 .brd-subject-title{{font-size:.76rem;font-weight:900;color:{DARK};display:flex;align-items:center;gap:6px;letter-spacing:.015em;}}
@@ -103,9 +105,6 @@ div[data-testid="stVerticalBlockBorderWrapper"]{{border-color:{BORDER}!important
 button[kind="primary"]{{background:{PURPLE}!important;border-color:{PURPLE}!important;}}
 .stProgress>div>div>div>div{{background-color:{PURPLE};}}
 [data-testid="stPlotlyChart"]{{border-radius:5px;overflow:hidden;}}
-[data-testid="stMetric"]{{background:transparent;border:0;padding:0;}}
-
-/* Streamlit controls tightened to prototype density */
 .stButton>button{{border-radius:5px;font-size:.61rem;min-height:31px;}}
 .stSelectbox label,.stDateInput label,.stTextInput label,.stNumberInput label{{font-size:.57rem!important;font-weight:750!important;color:#34334F!important;}}
 [data-baseweb="select"]>div,input{{font-size:.61rem!important;}}
@@ -177,21 +176,10 @@ def login():
 
 
 def _last_updated(user_id):
-    rows = get_df(
-        sb,
-        "practice_attempts",
-        "updated_at,created_at",
-        {"student_id": user_id},
-        order="updated_at",
-        desc=True,
-    )
+    rows = get_df(sb, "practice_attempts", "updated_at,created_at", {"student_id": user_id}, order="updated_at", desc=True)
     if rows.empty:
         return "No activity yet"
-    stamp = pd.to_datetime(
-        rows.iloc[0].get("updated_at") or rows.iloc[0].get("created_at"),
-        utc=True,
-        errors="coerce",
-    )
+    stamp = pd.to_datetime(rows.iloc[0].get("updated_at") or rows.iloc[0].get("created_at"), utc=True, errors="coerce")
     return "No activity yet" if pd.isna(stamp) else stamp.strftime("%d %b %Y, %I:%M %p")
 
 
@@ -202,66 +190,54 @@ def render_global_header(user):
     if st.session_state.get("global_exam_level") != current:
         st.session_state.global_exam_level = current
 
-    st.markdown("<div class='global-header-marker'></div>", unsafe_allow_html=True)
     c1, c2, c3, c4 = st.columns([2.6, 2.45, 3.0, 1.75], vertical_alignment="center", gap="small")
     c1.markdown(f"<div class='global-student'>{name}</div>", unsafe_allow_html=True)
     with c2:
         label, control = st.columns([.75, 2.1], vertical_alignment="center", gap="small")
         label.markdown("<div class='global-label'>Exam Level</div>", unsafe_allow_html=True)
         with control:
-            selected = st.segmented_control(
-                "Exam Level",
-                ["AS Level", "A Level"],
-                key="global_exam_level",
-                label_visibility="collapsed",
-            )
+            selected = st.segmented_control("Exam Level", ["AS Level", "A Level"], key="global_exam_level", label_visibility="collapsed")
             if selected and selected != st.session_state.overview_level:
                 st.session_state.overview_level = selected
                 st.rerun()
-    c3.markdown(
-        f"<div class='global-updated'>◷&nbsp; Last updated: {_last_updated(user.id)}</div>",
-        unsafe_allow_html=True,
-    )
+    c3.markdown(f"<div class='global-updated'>◷&nbsp; Last updated: {_last_updated(user.id)}</div>", unsafe_allow_html=True)
     with c4:
-        st.markdown("<div class='global-action'>", unsafe_allow_html=True)
         if st.button("+ Record Practice Paper", type="primary", use_container_width=True, key="global_record_action"):
             st.session_state.nav = "Record Practice Paper"
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown("<div style='height:.1rem'></div>", unsafe_allow_html=True)
+    st.divider()
 
 
 def render_navigation(user):
     pages = [
-        ("⌂   Overview", "Overview"),
-        ("▤   Record Practice Paper", "Record Practice Paper"),
-        ("◔   Topic Analysis", "Topic Analysis"),
+        ("⌂  Overview", "Overview"),
+        ("▤  Record Practice Paper", "Record Practice Paper"),
+        ("◔  Topic Analysis", "Topic Analysis"),
     ]
     name = student_name(sb, user)
+    level = st.session_state.get("overview_level", "AS Level")
+    initials = "".join(part[0] for part in name.split()[:2]).upper() or "LE"
+
     with st.sidebar:
-        st.markdown(
-            "<div class='nav-brand-wrap'><span class='nav-logo'>◉</span><span class='nav-brand'>ONEVIEW</span></div>",
-            unsafe_allow_html=True,
-        )
-        st.markdown("<div class='nav-label'>Navigation</div>", unsafe_allow_html=True)
+        st.markdown("<div class='nav-brand-wrap'><span class='nav-logo'>◉</span><span class='nav-brand'>ONEVIEW</span></div>", unsafe_allow_html=True)
+        st.markdown("<div class='nav-stack'>", unsafe_allow_html=True)
         for label, page in pages:
-            if st.button(
-                label,
-                key=f"nav_link_{page}",
-                type="primary" if st.session_state.nav == page else "secondary",
-                use_container_width=True,
-            ):
+            if st.button(label, key=f"nav_link_{page}", type="primary" if st.session_state.nav == page else "secondary", use_container_width=True):
                 if st.session_state.nav != page:
                     st.session_state.nav = page
                     st.rerun()
-
-        st.markdown("<div style='height:36vh'></div>", unsafe_allow_html=True)
-        st.markdown("<div class='nav-user-block'>", unsafe_allow_html=True)
-        st.markdown("<div class='nav-switch'>Switch Student</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='nav-user'>{name}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='nav-level'>{st.session_state.get('overview_level','AS Level')} Student</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
-        if st.button("↪   Log out", key="nav_logout", use_container_width=True):
+
+        st.markdown("<div class='nav-spacer'></div>", unsafe_allow_html=True)
+        st.markdown(
+            f"<div class='nav-user-block'><div class='nav-avatar-row'>"
+            f"<div class='nav-avatar'>{initials}</div>"
+            f"<div class='nav-user-meta'><div class='nav-user'>{name}</div>"
+            f"<div class='nav-level'>{level}</div></div></div></div>",
+            unsafe_allow_html=True,
+        )
+        st.markdown("<div class='nav-logout-wrap'>", unsafe_allow_html=True)
+        if st.button("↪  Log Out", key="nav_logout", use_container_width=True):
             try:
                 sb.auth.sign_out()
             except Exception:
@@ -269,6 +245,7 @@ def render_navigation(user):
             for key in ("user", "access_token", "refresh_token", "nav"):
                 st.session_state.pop(key, None)
             st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 def app():
