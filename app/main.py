@@ -80,8 +80,9 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 2.5a9.5 9.5 0 1 0 9.5 9.5H11z'/%3E%3Cpath d='M14 2.8v6.2h6.2A8.1 8.1 0 0 0 14 2.8z'/%3E%3C/svg%3E") center/contain no-repeat;
 }}
 
-.nav-spacer{{height:10vh;min-height:48px;max-height:72px;}}
-.nav-user-block{{padding:0 8px 11px;border:0;}}
+/* Footer is deliberately kept close to the nav so it is always visible. */
+.nav-spacer{{height:22px;min-height:22px;max-height:22px;}}
+.nav-user-block{{padding:0 8px 11px;border:0;position:relative;z-index:5;}}
 .nav-avatar-row{{display:flex;align-items:center;gap:8px;}}
 .nav-avatar{{width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#5B35E8;color:#fff;font-size:.61rem;font-weight:700;flex:0 0 auto;}}
 .nav-user-meta{{min-width:0;display:flex;flex-direction:column;justify-content:center;}}
@@ -89,7 +90,7 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 .nav-user{{font-size:.63rem;font-weight:600;color:#fff;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
 .nav-user-chevron{{font-size:.5rem;color:#D8D3FF;margin-left:4px;vertical-align:1px;}}
 
-.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.12);padding:5px 0 0;margin:0 -2px;}}
+.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.12);padding:5px 0 0;margin:0 -2px;position:relative;z-index:5;}}
 [data-testid="stSidebar"] .st-key-nav_logout{{margin:0!important;}}
 [data-testid="stSidebar"] .st-key-nav_logout button{{
   min-height:46px!important;height:46px!important;padding:0 12px!important;font-size:.65rem!important;font-weight:500!important;
@@ -159,7 +160,7 @@ hr{{margin:.25rem 0 .55rem!important;}}
  [data-testid="stSidebar"]>div:first-child{{width:194px!important;}}
  .nav-brand-wrap{{height:64px;}}
  [data-testid="stSidebar"] .stButton>button{{min-height:49px;height:49px;}}
- .nav-spacer{{height:4vh;min-height:18px;max-height:30px;}}
+ .nav-spacer{{height:12px;min-height:12px;max-height:12px;}}
  .block-container{{padding-left:.75rem;padding-right:.75rem;}}
 }}
 </style>
