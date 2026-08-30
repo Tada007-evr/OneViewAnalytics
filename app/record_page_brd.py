@@ -17,6 +17,7 @@ PAPER_TYPES = {
 }
 ERROR_CHOICES = ERROR_TYPES[1:]
 TOTAL_MARKS_MVP = 75
+DATE_MIN = date(2020, 1, 1)
 
 
 def _paper_family(code):
@@ -109,7 +110,13 @@ def _paper_details(sb, user):
         with d4:
             st.selectbox("Variant *", ["—"], disabled=True, key="rpv_no_variant")
         with d5:
-            completed_on = st.date_input("Date Completed *", value=date.today(), max_value=date.today(), key="rpv_date_empty")
+            completed_on = st.date_input(
+                "Date Completed *",
+                value=date.today(),
+                min_value=DATE_MIN,
+                max_value=date.today(),
+                key="rpv_date_empty",
+            )
         return None, completed_on
 
     subset["session_label"] = subset.apply(_session_label, axis=1)
@@ -130,9 +137,13 @@ def _paper_details(sb, user):
         }, order="updated_at", desc=True,
     )
     default_date = pd.to_datetime(existing.iloc[0]["attempt_date"]).date() if not existing.empty else date.today()
+    default_date = max(default_date, DATE_MIN)
     with d5:
         completed_on = st.date_input(
-            "Date Completed *", value=default_date, max_value=date.today(),
+            "Date Completed *",
+            value=default_date,
+            min_value=DATE_MIN,
+            max_value=date.today(),
             key=f"rpv_date_{paper['paper_id']}",
         )
     return paper, completed_on
@@ -272,6 +283,8 @@ def render_record_practice(sb, user):
         _summary(work)
 
     errors = validate_grid(work, TOTAL_MARKS_MVP)
+    if completed_on < DATE_MIN:
+        errors.append("Date Completed must be 01 Jan 2020 or later.")
     for error in errors:
         st.error(error)
 
