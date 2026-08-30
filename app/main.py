@@ -60,17 +60,18 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 [data-testid="stSidebar"] .stButton>button:hover{{background:#38208C;color:white;border:0;}}
 [data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:#5B35D5!important;color:white!important;border:0!important;box-shadow:0 4px 12px rgba(91,53,213,.28)!important;}}
 
-/* Prototype positions the student context and logout as a compact footer block. */
-.nav-spacer{{height:39vh;min-height:185px;max-height:355px;}}
+/* Keep prototype-style student footer and logout visible in the viewport. */
+.nav-spacer{{height:24vh;min-height:95px;max-height:175px;}}
 .nav-user-block{{border-top:1px solid rgba(255,255,255,.10);padding:.72rem .42rem .48rem;}}
 .nav-avatar-row{{display:flex;align-items:center;gap:9px;}}
 .nav-avatar{{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#684BE1;color:#fff;font-size:.55rem;font-weight:900;flex:0 0 auto;}}
 .nav-user-meta{{min-width:0;display:flex;flex-direction:column;justify-content:center;}}
 .nav-user{{font-size:.62rem;font-weight:800;color:white;line-height:1.18;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
 .nav-level{{font-size:.49rem;color:#C8C2EA;margin-top:.2rem;line-height:1.1;}}
-.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.08);padding:.34rem .18rem 0;margin-top:0;}}
-[data-testid="stSidebar"] .st-key-nav_logout button{{height:35px!important;min-height:35px!important;padding:0 .35rem!important;font-size:.58rem!important;font-weight:600!important;background:transparent!important;box-shadow:none!important;border:0!important;color:#E9E5FF!important;}}
-[data-testid="stSidebar"] .st-key-nav_logout button:hover{{background:rgba(255,255,255,.06)!important;}}
+.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.08);padding:.38rem .18rem 0;margin-top:0;}}
+[data-testid="stSidebar"] .st-key-nav_logout button{{height:38px!important;min-height:38px!important;padding:0 .38rem!important;font-size:.61rem!important;font-weight:650!important;background:transparent!important;box-shadow:none!important;border:0!important;color:#F1EEFF!important;justify-content:flex-start!important;text-align:left!important;}}
+[data-testid="stSidebar"] .st-key-nav_logout button p{{font-size:.61rem!important;color:#F1EEFF!important;white-space:nowrap!important;}}
+[data-testid="stSidebar"] .st-key-nav_logout button:hover{{background:rgba(255,255,255,.07)!important;}}
 
 /* GLOBAL HEADER */
 .global-student{{font-size:.92rem;font-weight:900;color:{DARK};padding-top:.36rem;white-space:nowrap;}}
@@ -126,7 +127,7 @@ hr{{margin:.25rem 0 .55rem!important;}}
 @media(max-width:1100px){{
  [data-testid="stSidebar"]{{min-width:164px!important;max-width:164px!important;width:164px!important;}}
  [data-testid="stSidebar"]>div:first-child{{width:164px!important;}}
- .nav-spacer{{height:27vh;min-height:120px;max-height:220px;}}
+ .nav-spacer{{height:14vh;min-height:55px;max-height:95px;}}
  .block-container{{padding-left:.75rem;padding-right:.75rem;}}
 }}
 </style>
@@ -265,7 +266,7 @@ def render_navigation(user):
             unsafe_allow_html=True,
         )
         st.markdown("<div class='nav-logout-wrap'>", unsafe_allow_html=True)
-        if st.button("⇥  Log Out", key="nav_logout", use_container_width=True):
+        if st.button("⎋  Log Out", key="nav_logout", use_container_width=True):
             try:
                 sb.auth.sign_out()
             except Exception:
