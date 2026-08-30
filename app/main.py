@@ -29,6 +29,13 @@ html,body,[class*="css"]{{font-family:Inter,Arial,sans-serif;}}
 .stApp{{background:#F7F8FC;color:#20213A;}}
 .block-container{{max-width:1310px;padding:.35rem 1rem 1.25rem;}}
 header[data-testid="stHeader"]{{background:transparent;height:0;}}
+[data-testid="stToolbar"],
+[data-testid="stAppDeployButton"],
+[data-testid="stMainMenu"],
+[data-testid="stStatusWidget"],
+[data-testid="stDecoration"],
+.stAppToolbar,
+#MainMenu{{display:none!important;visibility:hidden!important;}}
 
 /* BRD LEFT NAVIGATION */
 [data-testid="stSidebar"]{{
@@ -57,12 +64,12 @@ header[data-testid="stHeader"]{{background:transparent;height:0;}}
 .nav-avatar-row{{display:flex;align-items:center;gap:8px;}}
 .nav-avatar{{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#684BE1;color:#fff;font-size:.56rem;font-weight:900;flex:0 0 auto;}}
 .nav-user-meta{{min-width:0;}}
-.nav-user{{font-size:.65rem;font-weight:850;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
+.nav-user{{font-size:.72rem;font-weight:850;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
 .nav-level{{font-size:.53rem;color:#CBC6EB;margin-top:.18rem;}}
 .nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.08);padding-top:.35rem;margin-top:.12rem;}}
 
 /* GLOBAL HEADER */
-.global-student{{font-size:.72rem;font-weight:850;color:{DARK};padding-top:.43rem;white-space:nowrap;}}
+.global-student{{font-size:.92rem;font-weight:900;color:{DARK};padding-top:.36rem;white-space:nowrap;}}
 .global-label{{font-size:.52rem;color:#8B8D9F;font-weight:750;margin-bottom:.12rem;text-align:right;}}
 .global-updated{{font-size:.56rem;color:#888A9B;text-align:right;white-space:nowrap;padding-top:.42rem;}}
 [data-testid="stSegmentedControl"] button{{font-size:.57rem!important;min-height:28px!important;padding:.13rem .5rem!important;border-radius:4px!important;}}
