@@ -266,7 +266,7 @@ def render_navigation(user):
             unsafe_allow_html=True,
         )
         st.markdown("<div class='nav-logout-wrap'>", unsafe_allow_html=True)
-        if st.button("↪  Log Out", key="nav_logout", use_container_width=True):
+        if st.button("□→  Logout", key="nav_logout", use_container_width=True):
             try:
                 sb.auth.sign_out()
             except Exception:
