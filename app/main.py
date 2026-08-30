@@ -37,28 +37,28 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 .stAppToolbar,
 #MainMenu{{display:none!important;visibility:hidden!important;pointer-events:none!important;}}
 
-/* BRD LEFT NAVIGATION — matched to the finalized prototype. */
+/* BRD LEFT NAVIGATION — compact enough to keep the complete prototype footer visible. */
 [data-testid="stSidebar"]{{
   background:linear-gradient(180deg,#19145B 0%,#25128D 55%,#2420B6 100%);
   border-right:0;
   min-width:204px!important;max-width:204px!important;width:204px!important;
 }}
 [data-testid="stSidebar"]>div:first-child{{width:204px!important;padding:0!important;}}
-[data-testid="stSidebar"] [data-testid="stSidebarContent"]{{padding:0 10px 12px!important;}}
+[data-testid="stSidebar"] [data-testid="stSidebarContent"]{{padding:0 10px 10px!important;overflow-y:auto!important;}}
 [data-testid="stSidebar"] *{{color:white;}}
 
-.nav-brand-wrap{{height:94px;display:flex;align-items:center;padding:0 10px;margin:0 -10px 20px;border-bottom:0;}}
-.nav-logo-svg{{width:42px;height:42px;flex:0 0 auto;margin-right:8px;}}
-.nav-brand{{font-size:1.05rem;font-weight:800;letter-spacing:0;color:#fff;line-height:1;}}
+.nav-brand-wrap{{height:72px;display:flex;align-items:center;padding:0 10px;margin:0 -10px 11px;border-bottom:0;}}
+.nav-logo-svg{{width:31px;height:31px;flex:0 0 auto;margin-right:7px;}}
+.nav-brand{{font-size:.86rem;font-weight:800;letter-spacing:0;color:#fff;line-height:1;}}
 
-[data-testid="stSidebar"] .stButton{{margin:0 0 7px!important;}}
+[data-testid="stSidebar"] .stButton{{margin:0 0 5px!important;}}
 [data-testid="stSidebar"] .stButton>button{{
-  width:100%;min-height:76px;height:76px;border:0!important;border-radius:8px!important;box-shadow:none!important;
-  justify-content:flex-start!important;text-align:left!important;font-size:.83rem!important;font-weight:600!important;
-  padding:0 14px!important;margin:0!important;color:#fff!important;background:transparent!important;line-height:1.35!important;
-  gap:13px!important;
+  width:100%;min-height:54px;height:54px;border:0!important;border-radius:7px!important;box-shadow:none!important;
+  justify-content:flex-start!important;text-align:left!important;font-size:.69rem!important;font-weight:600!important;
+  padding:0 12px!important;margin:0!important;color:#fff!important;background:transparent!important;line-height:1.24!important;
+  gap:10px!important;
 }}
-[data-testid="stSidebar"] .stButton>button p{{margin:0!important;white-space:normal!important;text-align:left!important;color:#fff!important;line-height:1.35!important;}}
+[data-testid="stSidebar"] .stButton>button p{{margin:0!important;white-space:normal!important;text-align:left!important;color:#fff!important;line-height:1.24!important;}}
 [data-testid="stSidebar"] .stButton>button:hover{{background:rgba(255,255,255,.08)!important;color:#fff!important;}}
 [data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:linear-gradient(90deg,#5D32E2 0%,#5530D8 100%)!important;color:#fff!important;box-shadow:none!important;}}
 
@@ -66,7 +66,7 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 .st-key-nav_overview button::before,
 .st-key-nav_record button::before,
 .st-key-nav_topic button::before,
-.st-key-nav_logout button::before{{content:"";display:block;flex:0 0 auto;width:27px;height:27px;background:#fff;}}
+.st-key-nav_logout button::before{{content:"";display:block;flex:0 0 auto;width:22px;height:22px;background:#fff;}}
 .st-key-nav_overview button::before{{
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10.8 12 3l9 7.8'/%3E%3Cpath d='M5.5 9.4V21h13V9.4'/%3E%3Cpath d='M9.5 21v-7h5v7'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10.8 12 3l9 7.8'/%3E%3Cpath d='M5.5 9.4V21h13V9.4'/%3E%3Cpath d='M9.5 21v-7h5v7'/%3E%3C/svg%3E") center/contain no-repeat;
@@ -80,24 +80,24 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 2.5a9.5 9.5 0 1 0 9.5 9.5H11z'/%3E%3Cpath d='M14 2.8v6.2h6.2A8.1 8.1 0 0 0 14 2.8z'/%3E%3C/svg%3E") center/contain no-repeat;
 }}
 
-.nav-spacer{{height:39vh;min-height:245px;max-height:430px;}}
-.nav-user-block{{padding:0 8px 17px;border:0;}}
-.nav-avatar-row{{display:flex;align-items:center;gap:9px;}}
-.nav-avatar{{width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#5B35E8;color:#fff;font-size:.68rem;font-weight:700;flex:0 0 auto;}}
+.nav-spacer{{height:10vh;min-height:48px;max-height:72px;}}
+.nav-user-block{{padding:0 8px 11px;border:0;}}
+.nav-avatar-row{{display:flex;align-items:center;gap:8px;}}
+.nav-avatar{{width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#5B35E8;color:#fff;font-size:.61rem;font-weight:700;flex:0 0 auto;}}
 .nav-user-meta{{min-width:0;display:flex;flex-direction:column;justify-content:center;}}
-.nav-switch{{font-size:.62rem;color:#fff;line-height:1.15;margin-bottom:5px;}}
-.nav-user{{font-size:.66rem;font-weight:500;color:#fff;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
-.nav-user-chevron{{font-size:.55rem;color:#D8D3FF;margin-left:4px;vertical-align:1px;}}
+.nav-switch{{font-size:.54rem;color:#D9D4FF;line-height:1.1;margin-bottom:4px;}}
+.nav-user{{font-size:.63rem;font-weight:600;color:#fff;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
+.nav-user-chevron{{font-size:.5rem;color:#D8D3FF;margin-left:4px;vertical-align:1px;}}
 
-.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.12);padding:9px 0 0;margin:0 -2px;}}
+.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.12);padding:5px 0 0;margin:0 -2px;}}
 [data-testid="stSidebar"] .st-key-nav_logout{{margin:0!important;}}
 [data-testid="stSidebar"] .st-key-nav_logout button{{
-  min-height:58px!important;height:58px!important;padding:0 14px!important;font-size:.72rem!important;font-weight:500!important;
-  background:transparent!important;box-shadow:none!important;border:0!important;color:#fff!important;justify-content:flex-start!important;text-align:left!important;gap:13px!important;
+  min-height:46px!important;height:46px!important;padding:0 12px!important;font-size:.65rem!important;font-weight:500!important;
+  background:transparent!important;box-shadow:none!important;border:0!important;color:#fff!important;justify-content:flex-start!important;text-align:left!important;gap:10px!important;
 }}
-[data-testid="stSidebar"] .st-key-nav_logout button p{{font-size:.72rem!important;color:#fff!important;white-space:nowrap!important;line-height:1!important;}}
+[data-testid="stSidebar"] .st-key-nav_logout button p{{font-size:.65rem!important;color:#fff!important;white-space:nowrap!important;line-height:1!important;}}
 .st-key-nav_logout button::before{{
-  width:25px;height:25px;
+  width:22px;height:22px;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;
 }}
@@ -157,7 +157,9 @@ hr{{margin:.25rem 0 .55rem!important;}}
 @media(max-width:1100px){{
  [data-testid="stSidebar"]{{min-width:194px!important;max-width:194px!important;width:194px!important;}}
  [data-testid="stSidebar"]>div:first-child{{width:194px!important;}}
- .nav-spacer{{height:24vh;min-height:135px;max-height:255px;}}
+ .nav-brand-wrap{{height:64px;}}
+ [data-testid="stSidebar"] .stButton>button{{min-height:49px;height:49px;}}
+ .nav-spacer{{height:4vh;min-height:18px;max-height:30px;}}
  .block-container{{padding-left:.75rem;padding-right:.75rem;}}
 }}
 </style>
@@ -270,6 +272,7 @@ def render_navigation(user):
         ("Topic Analysis", "Topic Analysis", "nav_topic"),
     ]
     name = student_name(sb, user)
+    level = st.session_state.get("overview_level", "AS Level")
     initials = "".join(part[0] for part in name.split()[:2]).upper() or "LE"
 
     with st.sidebar:
@@ -301,8 +304,9 @@ def render_navigation(user):
         st.markdown(
             f"<div class='nav-user-block'><div class='nav-avatar-row'>"
             f"<div class='nav-avatar'>{initials}</div>"
-            f"<div class='nav-user-meta'><div class='nav-switch'>Switch Student</div>"
+            f"<div class='nav-user-meta'><div class='nav-switch'>Student</div>"
             f"<div class='nav-user'>{name}<span class='nav-user-chevron'>⌄</span></div>"
+            f"<div class='nav-switch' style='margin-top:4px;margin-bottom:0'>{level}</div>"
             f"</div></div></div>",
             unsafe_allow_html=True,
         )
