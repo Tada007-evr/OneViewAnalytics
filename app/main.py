@@ -37,41 +37,71 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 .stAppToolbar,
 #MainMenu{{display:none!important;visibility:hidden!important;pointer-events:none!important;}}
 
-/* BRD LEFT NAVIGATION */
+/* BRD LEFT NAVIGATION — matched to the finalized prototype. */
 [data-testid="stSidebar"]{{
-  background:linear-gradient(180deg,#25106D 0%,#2B147E 48%,#21106B 100%);
+  background:linear-gradient(180deg,#19145B 0%,#25128D 55%,#2420B6 100%);
   border-right:0;
-  min-width:174px!important;max-width:174px!important;width:174px!important;
+  min-width:204px!important;max-width:204px!important;width:204px!important;
 }}
-[data-testid="stSidebar"]>div:first-child{{width:174px!important;padding:0!important;}}
-[data-testid="stSidebar"] [data-testid="stSidebarContent"]{{padding:.72rem .65rem .8rem!important;}}
+[data-testid="stSidebar"]>div:first-child{{width:204px!important;padding:0!important;}}
+[data-testid="stSidebar"] [data-testid="stSidebarContent"]{{padding:0 10px 12px!important;}}
 [data-testid="stSidebar"] *{{color:white;}}
-.nav-brand-wrap{{height:57px;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);margin:-.1rem -.65rem .72rem;padding:0 .75rem;}}
-.nav-logo{{width:23px;height:23px;border-radius:50%;border:1.5px solid #CFC9FF;display:inline-flex;align-items:center;justify-content:center;margin-right:7px;font-size:.72rem;}}
-.nav-brand{{font-size:.78rem;font-weight:900;letter-spacing:.035em;}}
-.nav-stack{{display:flex;flex-direction:column;gap:4px;}}
-[data-testid="stSidebar"] .stButton{{margin:0!important;}}
-[data-testid="stSidebar"] .stButton>button{{
-  width:100%;height:43px;min-height:43px;border:0;border-radius:7px;box-shadow:none;
-  justify-content:flex-start;text-align:left;font-size:.67rem;font-weight:650;
-  padding:0 .58rem;margin:0;color:#F5F3FF;background:transparent;line-height:1.1;
-}}
-[data-testid="stSidebar"] .stButton>button p{{margin:0!important;white-space:normal;text-align:left;}}
-[data-testid="stSidebar"] .stButton>button:hover{{background:#38208C;color:white;border:0;}}
-[data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:#5B35D5!important;color:white!important;border:0!important;box-shadow:0 4px 12px rgba(91,53,213,.28)!important;}}
 
-/* Match the BRD prototype footer placement: student identity above a clearly visible logout row. */
-.nav-spacer{{height:13vh;min-height:52px;max-height:92px;}}
-.nav-user-block{{border-top:1px solid rgba(255,255,255,.10);padding:.64rem .34rem .42rem;}}
-.nav-avatar-row{{display:flex;align-items:center;gap:8px;}}
-.nav-avatar{{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#684BE1;color:#fff;font-size:.55rem;font-weight:900;flex:0 0 auto;}}
+.nav-brand-wrap{{height:94px;display:flex;align-items:center;padding:0 10px;margin:0 -10px 20px;border-bottom:0;}}
+.nav-logo-svg{{width:42px;height:42px;flex:0 0 auto;margin-right:8px;}}
+.nav-brand{{font-size:1.05rem;font-weight:800;letter-spacing:0;color:#fff;line-height:1;}}
+
+[data-testid="stSidebar"] .stButton{{margin:0 0 7px!important;}}
+[data-testid="stSidebar"] .stButton>button{{
+  width:100%;min-height:76px;height:76px;border:0!important;border-radius:8px!important;box-shadow:none!important;
+  justify-content:flex-start!important;text-align:left!important;font-size:.83rem!important;font-weight:600!important;
+  padding:0 14px!important;margin:0!important;color:#fff!important;background:transparent!important;line-height:1.35!important;
+  gap:13px!important;
+}}
+[data-testid="stSidebar"] .stButton>button p{{margin:0!important;white-space:normal!important;text-align:left!important;color:#fff!important;line-height:1.35!important;}}
+[data-testid="stSidebar"] .stButton>button:hover{{background:rgba(255,255,255,.08)!important;color:#fff!important;}}
+[data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:linear-gradient(90deg,#5D32E2 0%,#5530D8 100%)!important;color:#fff!important;box-shadow:none!important;}}
+
+/* Prototype line icons: home, record/clipboard, topic/pie. */
+.st-key-nav_overview button::before,
+.st-key-nav_record button::before,
+.st-key-nav_topic button::before,
+.st-key-nav_logout button::before{{content:"";display:block;flex:0 0 auto;width:27px;height:27px;background:#fff;}}
+.st-key-nav_overview button::before{{
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10.8 12 3l9 7.8'/%3E%3Cpath d='M5.5 9.4V21h13V9.4'/%3E%3Cpath d='M9.5 21v-7h5v7'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10.8 12 3l9 7.8'/%3E%3Cpath d='M5.5 9.4V21h13V9.4'/%3E%3Cpath d='M9.5 21v-7h5v7'/%3E%3C/svg%3E") center/contain no-repeat;
+}}
+.st-key-nav_record button::before{{
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='4.5' width='14' height='16.5' rx='1.8'/%3E%3Cpath d='M9 3h6v3H9z'/%3E%3Cpath d='M8.5 10h7M8.5 14h4M8.5 18h7'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='4.5' width='14' height='16.5' rx='1.8'/%3E%3Cpath d='M9 3h6v3H9z'/%3E%3Cpath d='M8.5 10h7M8.5 14h4M8.5 18h7'/%3E%3C/svg%3E") center/contain no-repeat;
+}}
+.st-key-nav_topic button::before{{
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 2.5a9.5 9.5 0 1 0 9.5 9.5H11z'/%3E%3Cpath d='M14 2.8v6.2h6.2A8.1 8.1 0 0 0 14 2.8z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 2.5a9.5 9.5 0 1 0 9.5 9.5H11z'/%3E%3Cpath d='M14 2.8v6.2h6.2A8.1 8.1 0 0 0 14 2.8z'/%3E%3C/svg%3E") center/contain no-repeat;
+}}
+
+.nav-spacer{{height:39vh;min-height:245px;max-height:430px;}}
+.nav-user-block{{padding:0 8px 17px;border:0;}}
+.nav-avatar-row{{display:flex;align-items:center;gap:9px;}}
+.nav-avatar{{width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#5B35E8;color:#fff;font-size:.68rem;font-weight:700;flex:0 0 auto;}}
 .nav-user-meta{{min-width:0;display:flex;flex-direction:column;justify-content:center;}}
-.nav-user{{font-size:.63rem;font-weight:800;color:white;line-height:1.18;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
-.nav-level{{font-size:.49rem;color:#C8C2EA;margin-top:.18rem;line-height:1.1;}}
-.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.10);padding:.28rem .10rem 0;margin-top:.02rem;}}
-[data-testid="stSidebar"] .st-key-nav_logout button{{height:39px!important;min-height:39px!important;padding:0 .32rem!important;font-size:.63rem!important;font-weight:650!important;background:transparent!important;box-shadow:none!important;border:0!important;color:#F4F1FF!important;justify-content:flex-start!important;text-align:left!important;}}
-[data-testid="stSidebar"] .st-key-nav_logout button p{{font-size:.63rem!important;color:#F4F1FF!important;white-space:nowrap!important;line-height:1!important;}}
-[data-testid="stSidebar"] .st-key-nav_logout button:hover{{background:rgba(255,255,255,.07)!important;}}
+.nav-switch{{font-size:.62rem;color:#fff;line-height:1.15;margin-bottom:5px;}}
+.nav-user{{font-size:.66rem;font-weight:500;color:#fff;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
+.nav-user-chevron{{font-size:.55rem;color:#D8D3FF;margin-left:4px;vertical-align:1px;}}
+
+.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.12);padding:9px 0 0;margin:0 -2px;}}
+[data-testid="stSidebar"] .st-key-nav_logout{{margin:0!important;}}
+[data-testid="stSidebar"] .st-key-nav_logout button{{
+  min-height:58px!important;height:58px!important;padding:0 14px!important;font-size:.72rem!important;font-weight:500!important;
+  background:transparent!important;box-shadow:none!important;border:0!important;color:#fff!important;justify-content:flex-start!important;text-align:left!important;gap:13px!important;
+}}
+[data-testid="stSidebar"] .st-key-nav_logout button p{{font-size:.72rem!important;color:#fff!important;white-space:nowrap!important;line-height:1!important;}}
+.st-key-nav_logout button::before{{
+  width:25px;height:25px;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;
+}}
+[data-testid="stSidebar"] .st-key-nav_logout button:hover{{background:rgba(255,255,255,.06)!important;}}
 
 /* GLOBAL HEADER */
 .global-student{{font-size:.92rem;font-weight:900;color:{DARK};padding-top:.36rem;white-space:nowrap;}}
@@ -125,9 +155,9 @@ button[kind="primary"]{{background:{PURPLE}!important;border-color:{PURPLE}!impo
 hr{{margin:.25rem 0 .55rem!important;}}
 
 @media(max-width:1100px){{
- [data-testid="stSidebar"]{{min-width:164px!important;max-width:164px!important;width:164px!important;}}
- [data-testid="stSidebar"]>div:first-child{{width:164px!important;}}
- .nav-spacer{{height:8vh;min-height:30px;max-height:55px;}}
+ [data-testid="stSidebar"]{{min-width:194px!important;max-width:194px!important;width:194px!important;}}
+ [data-testid="stSidebar"]>div:first-child{{width:194px!important;}}
+ .nav-spacer{{height:24vh;min-height:135px;max-height:255px;}}
  .block-container{{padding-left:.75rem;padding-right:.75rem;}}
 }}
 </style>
@@ -235,38 +265,49 @@ def render_global_header(user):
 
 def render_navigation(user):
     pages = [
-        ("⌂  Overview", "Overview"),
-        ("▤  Record Practice Paper", "Record Practice Paper"),
-        ("◔  Topic Analysis", "Topic Analysis"),
+        ("Overview", "Overview", "nav_overview"),
+        ("Record\nPractice Paper", "Record Practice Paper", "nav_record"),
+        ("Topic Analysis", "Topic Analysis", "nav_topic"),
     ]
     name = student_name(sb, user)
-    level = st.session_state.get("overview_level", "AS Level")
     initials = "".join(part[0] for part in name.split()[:2]).upper() or "LE"
 
     with st.sidebar:
-        st.markdown("<div class='nav-brand-wrap'><span class='nav-logo'>◉</span><span class='nav-brand'>ONEVIEW</span></div>", unsafe_allow_html=True)
-        st.markdown("<div class='nav-stack'>", unsafe_allow_html=True)
-        for label, page in pages:
+        st.markdown(
+            """
+            <div class='nav-brand-wrap'>
+              <svg class='nav-logo-svg' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>
+                <circle cx='24' cy='24' r='20.5' stroke='white' stroke-width='1.7'/>
+                <path d='M14 31V26M20 31V22M26 31V18M32 31V14' stroke='white' stroke-width='1.8' stroke-linecap='round'/>
+                <path d='M13 21.5L19 18L24.5 20.5L33 12' stroke='white' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/>
+                <path d='M29.5 12H33V15.5' stroke='white' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/>
+              </svg>
+              <span class='nav-brand'>ONEVIEW</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        for label, page, key in pages:
             st.button(
                 label,
-                key=f"nav_link_{page}",
+                key=key,
                 type="primary" if st.session_state.nav == page else "secondary",
                 use_container_width=True,
                 on_click=_go_to,
                 args=(page,),
             )
-        st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='nav-spacer'></div>", unsafe_allow_html=True)
         st.markdown(
             f"<div class='nav-user-block'><div class='nav-avatar-row'>"
             f"<div class='nav-avatar'>{initials}</div>"
-            f"<div class='nav-user-meta'><div class='nav-user'>{name}</div>"
-            f"<div class='nav-level'>{level}</div></div></div></div>",
+            f"<div class='nav-user-meta'><div class='nav-switch'>Switch Student</div>"
+            f"<div class='nav-user'>{name}<span class='nav-user-chevron'>⌄</span></div>"
+            f"</div></div></div>",
             unsafe_allow_html=True,
         )
         st.markdown("<div class='nav-logout-wrap'>", unsafe_allow_html=True)
-        if st.button("□→  Logout", key="nav_logout", use_container_width=True):
+        if st.button("Logout", key="nav_logout", use_container_width=True):
             try:
                 sb.auth.sign_out()
             except Exception:
