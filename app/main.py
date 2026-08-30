@@ -28,14 +28,14 @@ st.markdown(
 html,body,[class*="css"]{{font-family:Inter,Arial,sans-serif;}}
 .stApp{{background:#F7F8FC;color:#20213A;}}
 .block-container{{max-width:1310px;padding:.35rem 1rem 1.25rem;}}
-header[data-testid="stHeader"]{{background:transparent;height:0;}}
+header[data-testid="stHeader"]{{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important;}}
 [data-testid="stToolbar"],
 [data-testid="stAppDeployButton"],
 [data-testid="stMainMenu"],
 [data-testid="stStatusWidget"],
 [data-testid="stDecoration"],
 .stAppToolbar,
-#MainMenu{{display:none!important;visibility:hidden!important;}}
+#MainMenu{{display:none!important;visibility:hidden!important;pointer-events:none!important;}}
 
 /* BRD LEFT NAVIGATION */
 [data-testid="stSidebar"]{{
@@ -74,7 +74,8 @@ header[data-testid="stHeader"]{{background:transparent;height:0;}}
 .global-updated{{font-size:.56rem;color:#888A9B;text-align:right;white-space:nowrap;padding-top:.42rem;}}
 [data-testid="stSegmentedControl"] button{{font-size:.57rem!important;min-height:28px!important;padding:.13rem .5rem!important;border-radius:4px!important;}}
 [data-testid="stSegmentedControl"] [aria-pressed="true"]{{background:{PURPLE}!important;color:white!important;}}
-.st-key-global_action_wrap{{padding-top:.34rem!important;}}
+.st-key-global_action_wrap{{padding-top:.34rem!important;position:relative!important;z-index:20!important;pointer-events:auto!important;}}
+.st-key-global_action_wrap .stButton,.st-key-global_action_wrap .stButton>button{{position:relative!important;z-index:21!important;pointer-events:auto!important;}}
 .st-key-global_action_wrap .stButton>button{{font-size:.57rem!important;min-height:30px!important;padding:.2rem .55rem!important;}}
 
 /* SHARED BRD VISUAL SYSTEM */
@@ -192,6 +193,10 @@ def _last_updated(user_id):
     return "No activity yet" if pd.isna(stamp) else stamp.strftime("%d %b %Y, %I:%M %p")
 
 
+def _go_to(page):
+    st.session_state.nav = page
+
+
 def render_global_header(user):
     name = student_name(sb, user)
     st.session_state.setdefault("overview_level", "AS Level")
@@ -212,14 +217,14 @@ def render_global_header(user):
     c3.markdown(f"<div class='global-updated'>◷&nbsp; Last updated: {_last_updated(user.id)}</div>", unsafe_allow_html=True)
     with c4:
         with st.container(key="global_action_wrap"):
-            if st.button(
+            st.button(
                 "+ Record Practice Paper",
                 type="primary",
                 use_container_width=True,
                 key="global_record_action",
-            ):
-                # Route immediately in this same run; no callback/rerun race.
-                st.session_state.nav = "Record Practice Paper"
+                on_click=_go_to,
+                args=("Record Practice Paper",),
+            )
     st.divider()
 
 
@@ -237,14 +242,14 @@ def render_navigation(user):
         st.markdown("<div class='nav-brand-wrap'><span class='nav-logo'>◉</span><span class='nav-brand'>ONEVIEW</span></div>", unsafe_allow_html=True)
         st.markdown("<div class='nav-stack'>", unsafe_allow_html=True)
         for label, page in pages:
-            if st.button(
+            st.button(
                 label,
                 key=f"nav_link_{page}",
                 type="primary" if st.session_state.nav == page else "secondary",
                 use_container_width=True,
-            ):
-                # Route immediately so sidebar clicks cannot be lost between reruns.
-                st.session_state.nav = page
+                on_click=_go_to,
+                args=(page,),
+            )
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='nav-spacer'></div>", unsafe_allow_html=True)
@@ -281,7 +286,6 @@ def app():
     render_navigation(user)
     render_global_header(user)
 
-    # Route using the final state from this same interaction cycle.
     page = st.session_state.nav
     if page == "Overview":
         render_overview(sb, user)
