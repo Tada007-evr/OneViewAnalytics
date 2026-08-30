@@ -64,8 +64,8 @@ def _styles():
 .rpv-summary-sub{font-size:.6rem;color:#9193A2;margin-top:2px}
 .rpv-card-gap{height:.15rem}
 /* Compact widgets to mirror finalized prototype */
-div[data-testid="stSelectbox"] label,div[data-testid="stDateInput"] label,div[data-testid="stTextInput"] label{font-size:.64rem!important;font-weight:750!important;color:#49455F!important}
-div[data-testid="stSelectbox"] [data-baseweb="select"]>div,div[data-testid="stDateInput"] input,div[data-testid="stTextInput"] input{min-height:36px!important;font-size:.68rem!important}
+div[data-testid="stSelectbox"] label,div[data-testid="stDateInput"] label,div[data-testid="stTextInput"] label,div[data-testid="stNumberInput"] label{font-size:.64rem!important;font-weight:750!important;color:#49455F!important}
+div[data-testid="stSelectbox"] [data-baseweb="select"]>div,div[data-testid="stDateInput"] input,div[data-testid="stTextInput"] input,div[data-testid="stNumberInput"] input{min-height:36px!important;font-size:.68rem!important}
 .rpv-actions .stButton>button{min-height:38px!important;font-size:.7rem!important}
 </style>
 """,
@@ -164,26 +164,24 @@ def _question_table(grid, prefix):
     rows = []
     for idx, source in grid.reset_index(drop=True).iterrows():
         cols = st.columns(widths, gap="small")
+        max_marks = int(float(source["Max Marks"]))
         cols[0].markdown(f"<div class='rpv-cell rpv-question'>{source['Question']}</div>", unsafe_allow_html=True)
         cols[1].markdown(f"<div class='rpv-cell'>{source['Topic']}</div>", unsafe_allow_html=True)
         cols[2].markdown(f"<div class='rpv-cell'>{source['Sub-topic']}</div>", unsafe_allow_html=True)
-        cols[3].markdown(f"<div class='rpv-cell'>{int(float(source['Max Marks']))}</div>", unsafe_allow_html=True)
+        cols[3].markdown(f"<div class='rpv-cell'>{max_marks}</div>", unsafe_allow_html=True)
 
-        initial_lost = "" if source.get("Marks Lost") is None or pd.isna(source.get("Marks Lost")) else str(int(source.get("Marks Lost")))
+        initial_lost = None if source.get("Marks Lost") is None or pd.isna(source.get("Marks Lost")) else int(source.get("Marks Lost"))
         lost_key = f"{prefix}_lost_{idx}"
-        if lost_key not in st.session_state:
-            st.session_state[lost_key] = initial_lost
-        lost_text = cols[4].text_input(
-            "Marks Lost", key=lost_key, label_visibility="collapsed", placeholder="0",
+        lost_value = cols[4].number_input(
+            "Marks Lost",
+            min_value=0,
+            max_value=max_marks,
+            value=initial_lost,
+            step=1,
+            key=lost_key,
+            label_visibility="collapsed",
+            placeholder="0",
         )
-
-        lost_value = None
-        try:
-            parsed = float(lost_text) if str(lost_text).strip() != "" else None
-            if parsed is not None and parsed == int(parsed):
-                lost_value = int(parsed)
-        except Exception:
-            pass
 
         error_key = f"{prefix}_error_{idx}"
         existing_error = source.get("Error Type")
@@ -211,7 +209,7 @@ def _question_table(grid, prefix):
             )
 
         row = source.to_dict()
-        row["Marks Lost"] = lost_text
+        row["Marks Lost"] = lost_value
         row["Error Type"] = error_type
         rows.append(row)
     return pd.DataFrame(rows)
