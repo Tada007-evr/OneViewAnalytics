@@ -52,14 +52,15 @@ header[data-testid="stHeader"]{{background:transparent;height:0;}}
 [data-testid="stSidebar"] .stButton>button p{{margin:0!important;white-space:normal;text-align:left;}}
 [data-testid="stSidebar"] .stButton>button:hover{{background:#38208C;color:white;border:0;}}
 [data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:#5B35D5!important;color:white!important;border:0!important;box-shadow:0 4px 12px rgba(91,53,213,.28)!important;}}
-.nav-spacer{{height:34vh;}}
-.nav-user-block{{border-top:1px solid rgba(255,255,255,.10);padding:.78rem .18rem .38rem;}}
+/* Keep student identity and logout visible without requiring sidebar scrolling. */
+.nav-spacer{{height:15vh;min-height:70px;max-height:125px;}}
+.nav-user-block{{border-top:1px solid rgba(255,255,255,.10);padding:.65rem .18rem .28rem;}}
 .nav-avatar-row{{display:flex;align-items:center;gap:8px;}}
 .nav-avatar{{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#684BE1;color:#fff;font-size:.56rem;font-weight:900;flex:0 0 auto;}}
 .nav-user-meta{{min-width:0;}}
 .nav-user{{font-size:.65rem;font-weight:850;color:white;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
 .nav-level{{font-size:.53rem;color:#CBC6EB;margin-top:.18rem;}}
-.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.08);padding-top:.42rem;margin-top:.18rem;}}
+.nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.08);padding-top:.35rem;margin-top:.12rem;}}
 
 /* GLOBAL HEADER */
 .global-student{{font-size:.72rem;font-weight:850;color:{DARK};padding-top:.43rem;white-space:nowrap;}}
@@ -113,6 +114,7 @@ hr{{margin:.25rem 0 .55rem!important;}}
 @media(max-width:1100px){{
  [data-testid="stSidebar"]{{min-width:164px!important;max-width:164px!important;width:164px!important;}}
  [data-testid="stSidebar"]>div:first-child{{width:164px!important;}}
+ .nav-spacer{{height:9vh;min-height:45px;max-height:75px;}}
  .block-container{{padding-left:.75rem;padding-right:.75rem;}}
 }}
 </style>
