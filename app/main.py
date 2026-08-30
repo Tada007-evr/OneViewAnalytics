@@ -68,7 +68,8 @@ header[data-testid="stHeader"]{{background:transparent;height:0;}}
 .global-updated{{font-size:.56rem;color:#888A9B;text-align:right;white-space:nowrap;padding-top:.42rem;}}
 [data-testid="stSegmentedControl"] button{{font-size:.57rem!important;min-height:28px!important;padding:.13rem .5rem!important;border-radius:4px!important;}}
 [data-testid="stSegmentedControl"] [aria-pressed="true"]{{background:{PURPLE}!important;color:white!important;}}
-.global-action button{{font-size:.57rem!important;min-height:30px!important;padding:.2rem .55rem!important;}}
+.st-key-global_action_wrap{{padding-top:.34rem!important;}}
+.st-key-global_action_wrap .stButton>button{{font-size:.57rem!important;min-height:30px!important;padding:.2rem .55rem!important;}}
 
 /* SHARED BRD VISUAL SYSTEM */
 .brd-page-label{{display:none;}}
@@ -204,9 +205,10 @@ def render_global_header(user):
                 st.rerun()
     c3.markdown(f"<div class='global-updated'>◷&nbsp; Last updated: {_last_updated(user.id)}</div>", unsafe_allow_html=True)
     with c4:
-        if st.button("+ Record Practice Paper", type="primary", use_container_width=True, key="global_record_action"):
-            st.session_state.nav = "Record Practice Paper"
-            st.rerun()
+        with st.container(key="global_action_wrap"):
+            if st.button("+ Record Practice Paper", type="primary", use_container_width=True, key="global_record_action"):
+                st.session_state.nav = "Record Practice Paper"
+                st.rerun()
     st.divider()
 
 
