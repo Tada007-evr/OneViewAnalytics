@@ -192,11 +192,6 @@ def _last_updated(user_id):
     return "No activity yet" if pd.isna(stamp) else stamp.strftime("%d %b %Y, %I:%M %p")
 
 
-def _go_to(page):
-    """Set navigation state before Streamlit reruns the script."""
-    st.session_state.nav = page
-
-
 def render_global_header(user):
     name = student_name(sb, user)
     st.session_state.setdefault("overview_level", "AS Level")
@@ -217,14 +212,14 @@ def render_global_header(user):
     c3.markdown(f"<div class='global-updated'>◷&nbsp; Last updated: {_last_updated(user.id)}</div>", unsafe_allow_html=True)
     with c4:
         with st.container(key="global_action_wrap"):
-            st.button(
+            if st.button(
                 "+ Record Practice Paper",
                 type="primary",
                 use_container_width=True,
                 key="global_record_action",
-                on_click=_go_to,
-                args=("Record Practice Paper",),
-            )
+            ):
+                # Route immediately in this same run; no callback/rerun race.
+                st.session_state.nav = "Record Practice Paper"
     st.divider()
 
 
@@ -242,14 +237,14 @@ def render_navigation(user):
         st.markdown("<div class='nav-brand-wrap'><span class='nav-logo'>◉</span><span class='nav-brand'>ONEVIEW</span></div>", unsafe_allow_html=True)
         st.markdown("<div class='nav-stack'>", unsafe_allow_html=True)
         for label, page in pages:
-            st.button(
+            if st.button(
                 label,
                 key=f"nav_link_{page}",
                 type="primary" if st.session_state.nav == page else "secondary",
                 use_container_width=True,
-                on_click=_go_to,
-                args=(page,),
-            )
+            ):
+                # Route immediately so sidebar clicks cannot be lost between reruns.
+                st.session_state.nav = page
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='nav-spacer'></div>", unsafe_allow_html=True)
@@ -286,9 +281,11 @@ def app():
     render_navigation(user)
     render_global_header(user)
 
-    if st.session_state.nav == "Overview":
+    # Route using the final state from this same interaction cycle.
+    page = st.session_state.nav
+    if page == "Overview":
         render_overview(sb, user)
-    elif st.session_state.nav == "Record Practice Paper":
+    elif page == "Record Practice Paper":
         render_record_practice(sb, user)
     else:
         render_topic_analysis(sb, user)
