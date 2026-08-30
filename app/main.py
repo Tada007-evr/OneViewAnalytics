@@ -52,7 +52,6 @@ header[data-testid="stHeader"]{{background:transparent;height:0;}}
 [data-testid="stSidebar"] .stButton>button p{{margin:0!important;white-space:normal;text-align:left;}}
 [data-testid="stSidebar"] .stButton>button:hover{{background:#38208C;color:white;border:0;}}
 [data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:#5B35D5!important;color:white!important;border:0!important;box-shadow:0 4px 12px rgba(91,53,213,.28)!important;}}
-/* Keep student identity and logout visible without requiring sidebar scrolling. */
 .nav-spacer{{height:15vh;min-height:70px;max-height:125px;}}
 .nav-user-block{{border-top:1px solid rgba(255,255,255,.10);padding:.65rem .18rem .28rem;}}
 .nav-avatar-row{{display:flex;align-items:center;gap:8px;}}
@@ -186,6 +185,11 @@ def _last_updated(user_id):
     return "No activity yet" if pd.isna(stamp) else stamp.strftime("%d %b %Y, %I:%M %p")
 
 
+def _go_to(page):
+    """Set navigation state before Streamlit reruns the script."""
+    st.session_state.nav = page
+
+
 def render_global_header(user):
     name = student_name(sb, user)
     st.session_state.setdefault("overview_level", "AS Level")
@@ -206,9 +210,14 @@ def render_global_header(user):
     c3.markdown(f"<div class='global-updated'>◷&nbsp; Last updated: {_last_updated(user.id)}</div>", unsafe_allow_html=True)
     with c4:
         with st.container(key="global_action_wrap"):
-            if st.button("+ Record Practice Paper", type="primary", use_container_width=True, key="global_record_action"):
-                st.session_state.nav = "Record Practice Paper"
-                st.rerun()
+            st.button(
+                "+ Record Practice Paper",
+                type="primary",
+                use_container_width=True,
+                key="global_record_action",
+                on_click=_go_to,
+                args=("Record Practice Paper",),
+            )
     st.divider()
 
 
@@ -226,10 +235,14 @@ def render_navigation(user):
         st.markdown("<div class='nav-brand-wrap'><span class='nav-logo'>◉</span><span class='nav-brand'>ONEVIEW</span></div>", unsafe_allow_html=True)
         st.markdown("<div class='nav-stack'>", unsafe_allow_html=True)
         for label, page in pages:
-            if st.button(label, key=f"nav_link_{page}", type="primary" if st.session_state.nav == page else "secondary", use_container_width=True):
-                if st.session_state.nav != page:
-                    st.session_state.nav = page
-                    st.rerun()
+            st.button(
+                label,
+                key=f"nav_link_{page}",
+                type="primary" if st.session_state.nav == page else "secondary",
+                use_container_width=True,
+                on_click=_go_to,
+                args=(page,),
+            )
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("<div class='nav-spacer'></div>", unsafe_allow_html=True)
