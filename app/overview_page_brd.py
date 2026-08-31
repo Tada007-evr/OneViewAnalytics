@@ -12,10 +12,10 @@ def _overview_brd_styles():
         f"""
         <style>
         /* Overview is a single-line active nav item in Streamlit; pin its text to the
-           same absolute x-position used by the Record Practice Paper / Topic Analysis grid. */
+           Record Practice Paper / Topic Analysis text column, with the requested small right nudge. */
         [data-testid="stSidebar"] .st-key-nav_overview button{{position:relative!important;display:block!important;}}
         [data-testid="stSidebar"] .st-key-nav_overview button::before{{position:absolute!important;left:13px!important;top:50%!important;transform:translateY(-50%)!important;}}
-        [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"]{{position:absolute!important;left:47px!important;right:10px!important;top:50%!important;transform:translateY(-50%)!important;width:auto!important;margin:0!important;padding:0!important;}}
+        [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"]{{position:absolute!important;left:50px!important;right:10px!important;top:50%!important;transform:translateY(-50%)!important;width:auto!important;margin:0!important;padding:0!important;}}
         [data-testid="stSidebar"] .st-key-nav_overview button p{{margin:0!important;padding:0!important;text-align:left!important;}}
 
         .target-practice-heading{{font-size:.78rem;font-weight:900;color:{BRD_BLUE};letter-spacing:.015em;margin:.72rem 0 .08rem;}}
@@ -70,12 +70,7 @@ def _subject_panel_brd(sb, user, level, subject):
                 avg_score = ov.fmt(row.get("average_score"))
                 avg_value = avg_score if assessment_max is None or pd.isna(assessment_max) else f"{avg_score} / {ov.fmt(assessment_max, 0)}"
                 avg_subtext = f"{float(avg):.1f}%"
-            ov.metric_card(
-                "AVERAGE PERFORMANCE",
-                avg_value,
-                avg_subtext,
-                "✦",
-            )
+            ov.metric_card("AVERAGE PERFORMANCE", avg_value, avg_subtext, "✦")
         with m3:
             ov.metric_card(
                 "RECENT SCORE",
@@ -90,17 +85,9 @@ def _subject_panel_brd(sb, user, level, subject):
             predicted_score = float(row.get("predicted_score") or 0)
             max_marks = float(row.get("predicted_max_marks") or 0)
             predicted_pct = float(row.get("predicted_percentage") or 0)
-            st.markdown(
-                f"<div class='brd-prediction-value'>{predicted_score:.0f} / {max_marks:.0f}</div>"
-                f"<div class='brd-prediction-sub'>{predicted_pct:.1f}% · Rule-based forecast</div>",
-                unsafe_allow_html=True,
-            )
+            st.markdown(f"<div class='brd-prediction-value'>{predicted_score:.0f} / {max_marks:.0f}</div><div class='brd-prediction-sub'>{predicted_pct:.1f}% · Rule-based forecast</div>", unsafe_allow_html=True)
         else:
-            st.markdown(
-                "<div class='brd-prediction-value brd-empty'>More data needed</div>"
-                "<div class='brd-prediction-sub'>A definitive prediction requires the configured minimum number of valid attempts.</div>",
-                unsafe_allow_html=True,
-            )
+            st.markdown("<div class='brd-prediction-value brd-empty'>More data needed</div><div class='brd-prediction-sub'>A definitive prediction requires the configured minimum number of valid attempts.</div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
         trend_col, priority_col = st.columns(2, gap="medium")
@@ -108,7 +95,6 @@ def _subject_panel_brd(sb, user, level, subject):
             ov.trend_panel(sb, user, level, subject, row.get("trend_status") or "More data needed")
         with priority_col:
             ov.priority_panel(sb, user, level, subject)
-
         ov.narrative_cards(sb, user, level, subject)
 
 
@@ -117,24 +103,13 @@ def render_overview(sb, user):
     _overview_brd_styles()
     st.session_state.setdefault("overview_level", "AS Level")
     level = st.session_state.overview_level
-
     st.markdown("<div class='brd-page-label'>OVERVIEW</div>", unsafe_allow_html=True)
-
     pure, stats = st.columns(2, gap="medium")
     with pure:
         _subject_panel_brd(sb, user, level, "Pure Mathematics")
     with stats:
         _subject_panel_brd(sb, user, level, "Statistics")
-
     st.markdown("<div class='target-practice-heading'>TARGET PRACTICE</div>", unsafe_allow_html=True)
-    st.markdown(
-        "<div class='target-practice-help'>Target Type · Target · Completed · Remaining · % Completion · Status</div>",
-        unsafe_allow_html=True,
-    )
+    st.markdown("<div class='target-practice-help'>Target Type · Target · Completed · Remaining · % Completion · Status</div>", unsafe_allow_html=True)
     ov.target_practice_dashboard(sb, user, level)
-
-    st.markdown(
-        "<div class='oneview-footer'>Analytics are based on eligible saved practice papers with recorded questions and marks. "
-        "Pure Mathematics and Statistics remain independent, and AS/A Level data are never mixed.</div>",
-        unsafe_allow_html=True,
-    )
+    st.markdown("<div class='oneview-footer'>Analytics are based on eligible saved practice papers with recorded questions and marks. Pure Mathematics and Statistics remain independent, and AS/A Level data are never mixed.</div>", unsafe_allow_html=True)
