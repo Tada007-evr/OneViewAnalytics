@@ -31,7 +31,11 @@ html,body,[class*="css"]{{font-family:"Arial Narrow",Arial,sans-serif;}}
 .block-container{{max-width:1310px;padding:.30rem 1rem 1.25rem;}}
 header[data-testid="stHeader"]{{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important;}}
 [data-testid="stToolbar"],[data-testid="stAppDeployButton"],[data-testid="stMainMenu"],[data-testid="stStatusWidget"],[data-testid="stDecoration"],.stAppToolbar,#MainMenu{{display:none!important;visibility:hidden!important;pointer-events:none!important;}}
-[data-testid="stSidebarCollapsedControl"]{{display:none!important;visibility:hidden!important;}}
+/* Hide Streamlit's native sidebar arrows so only the OneView single-arrow controls are visible. */
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapsedControl"],
+button[aria-label="Collapse sidebar"],
+button[aria-label="Expand sidebar"]{{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}}
 
 /* Dedicated OneView sidebar arrows: left hides, right restores. */
 [data-testid="stSidebar"] .st-key-nav_collapse{{position:absolute!important;top:10px!important;right:8px!important;z-index:100!important;width:28px!important;}}
