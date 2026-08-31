@@ -42,13 +42,16 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 .nav-brand{{font-size:1.02rem;font-weight:700;letter-spacing:.01em;color:#fff;line-height:1;}}
 [data-testid="stSidebar"] .stButton{{margin:0 0 5px!important;}}
 [data-testid="stSidebar"] .stButton>button{{width:100%;min-height:57px;height:57px;border:0!important;border-radius:8px!important;box-shadow:none!important;justify-content:flex-start!important;text-align:left!important;font-size:.75rem!important;font-weight:600!important;padding:0 13px!important;margin:0!important;color:#fff!important;background:transparent!important;line-height:1.22!important;gap:11px!important;}}
-/* Force all three navigation labels to begin at exactly the same text column. */
+/* Force every navigation text block to the identical x-coordinate after its 23px icon. */
 [data-testid="stSidebar"] .st-key-nav_overview button,
 [data-testid="stSidebar"] .st-key-nav_record button,
 [data-testid="stSidebar"] .st-key-nav_topic button{{display:grid!important;grid-template-columns:23px minmax(0,1fr)!important;column-gap:11px!important;align-items:center!important;}}
+[data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"],
+[data-testid="stSidebar"] .st-key-nav_record button [data-testid="stMarkdownContainer"],
+[data-testid="stSidebar"] .st-key-nav_topic button [data-testid="stMarkdownContainer"]{{grid-column:2!important;margin:0!important;padding:0!important;min-width:0!important;width:100%!important;justify-self:stretch!important;}}
 [data-testid="stSidebar"] .st-key-nav_overview button p,
 [data-testid="stSidebar"] .st-key-nav_record button p,
-[data-testid="stSidebar"] .st-key-nav_topic button p{{grid-column:2!important;margin:0!important;padding:0!important;white-space:pre-line!important;text-align:left!important;color:#fff!important;line-height:1.22!important;}}
+[data-testid="stSidebar"] .st-key-nav_topic button p{{margin:0!important;padding:0!important;white-space:pre-line!important;text-align:left!important;color:#fff!important;line-height:1.22!important;}}
 [data-testid="stSidebar"] .stButton>button:hover{{background:rgba(255,255,255,.07)!important;color:#fff!important;}}
 [data-testid="stSidebar"] .stButton>button[kind="primary"]{{background:linear-gradient(90deg,#6841E4 0%,#5E39D9 100%)!important;color:#fff!important;box-shadow:none!important;}}
 .st-key-nav_overview button::before,.st-key-nav_record button::before,.st-key-nav_topic button::before,.st-key-nav_logout button::before{{content:"";display:block;flex:0 0 auto;width:23px;height:23px;background:#fff;}}
