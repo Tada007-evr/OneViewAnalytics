@@ -15,7 +15,7 @@ def _overview_brd_styles():
            Record Practice Paper / Topic Analysis text column, with the requested small right nudge. */
         [data-testid="stSidebar"] .st-key-nav_overview button{{position:relative!important;display:block!important;}}
         [data-testid="stSidebar"] .st-key-nav_overview button::before{{position:absolute!important;left:13px!important;top:50%!important;transform:translateY(-50%)!important;}}
-        [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"]{{position:absolute!important;left:50px!important;right:10px!important;top:50%!important;transform:translateY(-50%)!important;width:auto!important;margin:0!important;padding:0!important;}}
+        [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"]{{position:absolute!important;left:50.5px!important;right:10px!important;top:50%!important;transform:translateY(-50%)!important;width:auto!important;margin:0!important;padding:0!important;}}
         [data-testid="stSidebar"] .st-key-nav_overview button p{{margin:0!important;padding:0!important;text-align:left!important;}}
 
         .target-practice-heading{{font-size:.78rem;font-weight:900;color:{BRD_BLUE};letter-spacing:.015em;margin:.72rem 0 .08rem;}}
