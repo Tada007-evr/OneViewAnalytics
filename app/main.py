@@ -31,11 +31,17 @@ html,body,[class*="css"]{{font-family:"Arial Narrow",Arial,sans-serif;}}
 .block-container{{max-width:1310px;padding:.30rem 1rem 1.25rem;}}
 header[data-testid="stHeader"]{{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important;}}
 [data-testid="stToolbar"],[data-testid="stAppDeployButton"],[data-testid="stMainMenu"],[data-testid="stStatusWidget"],[data-testid="stDecoration"],.stAppToolbar,#MainMenu{{display:none!important;visibility:hidden!important;pointer-events:none!important;}}
-
-/* Recovery: force the navigation pane visible even if Streamlit/browser persisted a collapsed sidebar state. */
-[data-testid="stSidebar"]{{display:block!important;visibility:visible!important;opacity:1!important;transform:translateX(0)!important;margin-left:0!important;}}
-[data-testid="stSidebar"][aria-expanded="false"]{{display:block!important;visibility:visible!important;opacity:1!important;transform:translateX(0)!important;margin-left:0!important;}}
 [data-testid="stSidebarCollapsedControl"]{{display:none!important;visibility:hidden!important;}}
+
+/* Dedicated OneView sidebar arrows: left hides, right restores. */
+[data-testid="stSidebar"] .st-key-nav_collapse{{position:absolute!important;top:10px!important;right:8px!important;z-index:100!important;width:28px!important;}}
+[data-testid="stSidebar"] .st-key-nav_collapse .stButton{{margin:0!important;}}
+[data-testid="stSidebar"] .st-key-nav_collapse button{{width:28px!important;height:28px!important;min-height:28px!important;padding:0!important;border:0!important;border-radius:6px!important;background:rgba(255,255,255,.10)!important;color:#fff!important;font-size:.82rem!important;font-weight:800!important;display:flex!important;align-items:center!important;justify-content:center!important;box-shadow:none!important;}}
+[data-testid="stSidebar"] .st-key-nav_collapse button:hover{{background:rgba(255,255,255,.19)!important;}}
+.st-key-sidebar_expand_wrap{{position:fixed!important;left:8px!important;top:8px!important;z-index:10000!important;width:34px!important;}}
+.st-key-sidebar_expand_wrap .stButton{{margin:0!important;}}
+.st-key-sidebar_expand_wrap button{{width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;border:0!important;border-radius:7px!important;background:#1D187E!important;color:#fff!important;font-size:.90rem!important;font-weight:800!important;display:flex!important;align-items:center!important;justify-content:center!important;box-shadow:0 1px 4px rgba(17,16,68,.18)!important;}}
+.st-key-sidebar_expand_wrap button:hover{{background:#2821A3!important;}}
 
 /* Finalized BRD shared left navigation */
 [data-testid="stSidebar"]{{background:linear-gradient(180deg,#17145B 0%,#1D187E 50%,#2420B6 100%);border-right:0;min-width:204px!important;max-width:204px!important;width:204px!important;}}
@@ -192,6 +198,31 @@ def _go_to(page):
     st.session_state.nav = page
 
 
+def _set_sidebar(open_state):
+    st.session_state.sidebar_open = open_state
+
+
+def _apply_sidebar_state():
+    if st.session_state.get("sidebar_open", True):
+        st.markdown(
+            """
+            <style>
+            [data-testid="stSidebar"]{display:block!important;visibility:visible!important;opacity:1!important;transform:translateX(0)!important;margin-left:0!important;}
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            """
+            <style>
+            [data-testid="stSidebar"]{display:none!important;visibility:hidden!important;}
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
 def render_global_header(user):
     name = student_name(sb, user)
     st.session_state.setdefault("overview_level", "AS Level")
@@ -220,19 +251,24 @@ def render_navigation(user):
     name = student_name(sb, user)
     level = st.session_state.get("overview_level", "AS Level")
     initials = "".join(part[0] for part in name.split()[:2]).upper() or "LE"
-    with st.sidebar:
-        st.markdown("""<div class='nav-brand-wrap'><svg class='nav-logo-svg' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><circle cx='24' cy='24' r='20.5' stroke='white' stroke-width='1.7'/><path d='M14 31V26M20 31V22M26 31V18M32 31V14' stroke='white' stroke-width='1.8' stroke-linecap='round'/><path d='M13 21.5L19 18L24.5 20.5L33 12' stroke='white' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/><path d='M29.5 12H33V15.5' stroke='white' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg><span class='nav-brand'>ONEVIEW</span></div>""", unsafe_allow_html=True)
-        for label, page, key in pages:
-            st.button(label,key=key,type="primary" if st.session_state.nav == page else "secondary",use_container_width=True,on_click=_go_to,args=(page,))
-        st.markdown("<div class='nav-spacer'></div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='nav-user-block'><div class='nav-avatar-row'><div class='nav-avatar'>{initials}</div><div class='nav-user-meta'><div class='nav-user'>{name}</div><div class='nav-level'>{level} Student</div></div></div></div>", unsafe_allow_html=True)
-        st.markdown("<div class='nav-logout-wrap'>", unsafe_allow_html=True)
-        if st.button("Log out", key="nav_logout", use_container_width=True):
-            try: sb.auth.sign_out()
-            except Exception: pass
-            for key in ("user", "access_token", "refresh_token", "nav"): st.session_state.pop(key, None)
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+    if st.session_state.get("sidebar_open", True):
+        with st.sidebar:
+            st.button("◀", key="nav_collapse", help="Hide navigation", on_click=_set_sidebar, args=(False,))
+            st.markdown("""<div class='nav-brand-wrap'><svg class='nav-logo-svg' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><circle cx='24' cy='24' r='20.5' stroke='white' stroke-width='1.7'/><path d='M14 31V26M20 31V22M26 31V18M32 31V14' stroke='white' stroke-width='1.8' stroke-linecap='round'/><path d='M13 21.5L19 18L24.5 20.5L33 12' stroke='white' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/><path d='M29.5 12H33V15.5' stroke='white' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg><span class='nav-brand'>ONEVIEW</span></div>""", unsafe_allow_html=True)
+            for label, page, key in pages:
+                st.button(label,key=key,type="primary" if st.session_state.nav == page else "secondary",use_container_width=True,on_click=_go_to,args=(page,))
+            st.markdown("<div class='nav-spacer'></div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='nav-user-block'><div class='nav-avatar-row'><div class='nav-avatar'>{initials}</div><div class='nav-user-meta'><div class='nav-user'>{name}</div><div class='nav-level'>{level} Student</div></div></div></div>", unsafe_allow_html=True)
+            st.markdown("<div class='nav-logout-wrap'>", unsafe_allow_html=True)
+            if st.button("Log out", key="nav_logout", use_container_width=True):
+                try: sb.auth.sign_out()
+                except Exception: pass
+                for key in ("user", "access_token", "refresh_token", "nav"): st.session_state.pop(key, None)
+                st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
+    else:
+        with st.container(key="sidebar_expand_wrap"):
+            st.button("▶", key="nav_expand", help="Show navigation", on_click=_set_sidebar, args=(True,))
 
 
 def app():
@@ -241,7 +277,9 @@ def app():
         login(); return
     pages = ["Overview", "Record Practice Paper", "Topic Analysis"]
     st.session_state.setdefault("nav", "Overview")
+    st.session_state.setdefault("sidebar_open", True)
     if st.session_state.nav not in pages: st.session_state.nav = "Overview"
+    _apply_sidebar_state()
     render_navigation(user)
     render_global_header(user)
     page = st.session_state.nav
