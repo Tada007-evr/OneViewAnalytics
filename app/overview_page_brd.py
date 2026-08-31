@@ -25,8 +25,59 @@ def _overview_brd_styles():
     )
 
 
+def _config_int(sb, key, default):
+    rows = ov.get_df(sb, "overview_analytics_config", "config_value", {"config_key": key})
+    if rows.empty:
+        return default
+    try:
+        return int(rows.iloc[0]["config_value"])
+    except Exception:
+        return default
+
+
+def _priority_panel_brd(sb, user, level, subject):
+    """Render BRD priority state without treating a sufficient-data/no-priority case as insufficient."""
+    df = ov.priorities(sb, user.id, level, subject)
+    row = ov.overview_row(sb, user.id, level, subject)
+    completed = int(row.get("papers_completed") or 0)
+    overall_min = _config_int(sb, "overall_min_completed_papers", 5)
+
+    st.markdown("<div class='brd-subsection-title'>PRIORITY IMPROVEMENT AREAS</div>", unsafe_allow_html=True)
+    if df.empty:
+        if completed < overall_min:
+            st.info("More data needed")
+        else:
+            st.info("No priority area currently qualifies under the configured rules.")
+        return
+
+    for _, r in df.head(3).iterrows():
+        priority = r["priority"]
+        left, score, action = st.columns([4.4, 1.15, 0.8])
+        left.markdown(
+            f"<div class='brd-priority-row'><div class='brd-priority-topic'>{r['topic_name']}</div>"
+            f"<div class='brd-priority-subtopic'>{r['subtopic_name']}</div></div>",
+            unsafe_allow_html=True,
+        )
+        score.markdown(
+            f"<div class='brd-priority-score'>{float(r['average_percentage']):.0f}%<br>"
+            f"<span class='tag {ov.tag_class(priority)}'>{priority}</span></div>",
+            unsafe_allow_html=True,
+        )
+        if action.button("›", key=f"priority_{level}_{subject}_{r['priority_rank']}", help="Open Topic Analysis"):
+            st.session_state.topic_subject = subject
+            st.session_state.topic_name = r["topic_name"]
+            st.session_state.subtopic_name = r["subtopic_name"]
+            st.session_state.nav = "Topic Analysis"
+            st.rerun()
+
+    if st.button("View all in Topic Analysis →", key=f"topic_analysis_{level}_{subject}", use_container_width=True):
+        st.session_state.topic_subject = subject
+        st.session_state.nav = "Topic Analysis"
+        st.rerun()
+
+
 def _subject_panel_brd(sb, user, level, subject):
-    """Render the finalized Overview subject panel with BRD-exact Average Performance treatment."""
+    """Render the finalized Overview subject panel with BRD-exact analytics sufficiency behaviour."""
     row = ov.overview_row(sb, user.id, level, subject)
     target = row.get("target_value")
     completed = int(row.get("papers_completed") or 0)
@@ -74,20 +125,31 @@ def _subject_panel_brd(sb, user, level, subject):
 
         st.markdown("<div class='brd-prediction-card'>", unsafe_allow_html=True)
         st.markdown("<div class='brd-prediction-label'>PREDICTED PERFORMANCE <span title='Transparent rule-based forecast using recent valid attempts.'>ⓘ</span></div>", unsafe_allow_html=True)
-        if row.get("prediction_state") == "Sufficient":
+        prediction_state = row.get("prediction_state")
+        if prediction_state in ("Sufficient", "Limited"):
             predicted_score = float(row.get("predicted_score") or 0)
             max_marks = float(row.get("predicted_max_marks") or 0)
             predicted_pct = float(row.get("predicted_percentage") or 0)
-            st.markdown(f"<div class='brd-prediction-value'>{predicted_score:.0f} / {max_marks:.0f}</div><div class='brd-prediction-sub'>{predicted_pct:.1f}% · Rule-based forecast</div>", unsafe_allow_html=True)
+            confidence = row.get("prediction_confidence") or ("Limited" if prediction_state == "Limited" else "Standard")
+            qualifier = "Limited confidence" if confidence == "Limited" else "Rule-based forecast"
+            st.markdown(
+                f"<div class='brd-prediction-value'>{predicted_score:.0f} / {max_marks:.0f}</div>"
+                f"<div class='brd-prediction-sub'>{predicted_pct:.1f}% · {qualifier}</div>",
+                unsafe_allow_html=True,
+            )
         else:
-            st.markdown("<div class='brd-prediction-value brd-empty'>More data needed</div><div class='brd-prediction-sub'>A definitive prediction requires the configured minimum number of valid attempts.</div>", unsafe_allow_html=True)
+            st.markdown(
+                "<div class='brd-prediction-value brd-empty'>More data needed</div>"
+                "<div class='brd-prediction-sub'>A definitive prediction requires the configured minimum number of valid attempts.</div>",
+                unsafe_allow_html=True,
+            )
         st.markdown("</div>", unsafe_allow_html=True)
 
         trend_col, priority_col = st.columns(2, gap="medium")
         with trend_col:
             ov.trend_panel(sb, user, level, subject, row.get("trend_status") or "More data needed")
         with priority_col:
-            ov.priority_panel(sb, user, level, subject)
+            _priority_panel_brd(sb, user, level, subject)
         ov.narrative_cards(sb, user, level, subject)
 
 
