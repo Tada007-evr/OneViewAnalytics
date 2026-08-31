@@ -93,7 +93,11 @@ button[aria-label="Expand sidebar"]{{display:none!important;visibility:hidden!im
 .global-label{{font-size:.62rem;color:{DARK};font-weight:650;margin-bottom:0;text-align:right;white-space:nowrap;}}
 .global-updated{{font-size:.58rem;color:#595A72;text-align:right;white-space:nowrap;padding-top:.34rem;}}
 [data-testid="stSegmentedControl"] button{{font-size:.61rem!important;font-weight:600!important;min-height:34px!important;padding:.18rem .72rem!important;border-radius:5px!important;background:#FFFFFF!important;color:{BRD_BLUE}!important;border-color:#C9C6F7!important;box-shadow:none!important;}}
+[data-testid="stSegmentedControl"] button p,
+[data-testid="stSegmentedControl"] button span{{color:{BRD_BLUE}!important;}}
 [data-testid="stSegmentedControl"] [aria-pressed="true"]{{background:{BRD_BLUE}!important;color:#FFFFFF!important;border-color:{BRD_BLUE}!important;}}
+[data-testid="stSegmentedControl"] [aria-pressed="true"] p,
+[data-testid="stSegmentedControl"] [aria-pressed="true"] span{{color:#FFFFFF!important;}}
 .st-key-global_action_wrap{{padding-top:.24rem!important;position:relative!important;z-index:20!important;pointer-events:auto!important;}}
 .st-key-global_action_wrap .stButton,.st-key-global_action_wrap .stButton>button{{position:relative!important;z-index:21!important;pointer-events:auto!important;}}
 .st-key-global_action_wrap .stButton>button{{font-size:.60rem!important;font-weight:600!important;min-height:36px!important;padding:.24rem .65rem!important;border-radius:5px!important;background:{PURPLE}!important;border-color:{PURPLE}!important;}}
