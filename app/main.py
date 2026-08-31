@@ -32,6 +32,11 @@ html,body,[class*="css"]{{font-family:"Arial Narrow",Arial,sans-serif;}}
 header[data-testid="stHeader"]{{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important;}}
 [data-testid="stToolbar"],[data-testid="stAppDeployButton"],[data-testid="stMainMenu"],[data-testid="stStatusWidget"],[data-testid="stDecoration"],.stAppToolbar,#MainMenu{{display:none!important;visibility:hidden!important;pointer-events:none!important;}}
 
+/* Recovery: force the navigation pane visible even if Streamlit/browser persisted a collapsed sidebar state. */
+[data-testid="stSidebar"]{{display:block!important;visibility:visible!important;opacity:1!important;transform:translateX(0)!important;margin-left:0!important;}}
+[data-testid="stSidebar"][aria-expanded="false"]{{display:block!important;visibility:visible!important;opacity:1!important;transform:translateX(0)!important;margin-left:0!important;}}
+[data-testid="stSidebarCollapsedControl"]{{display:none!important;visibility:hidden!important;}}
+
 /* Finalized BRD shared left navigation */
 [data-testid="stSidebar"]{{background:linear-gradient(180deg,#17145B 0%,#1D187E 50%,#2420B6 100%);border-right:0;min-width:204px!important;max-width:204px!important;width:204px!important;}}
 [data-testid="stSidebar"]>div:first-child{{width:204px!important;padding:0!important;}}
