@@ -57,14 +57,12 @@ button[aria-label="Expand sidebar"]{{display:none!important;visibility:hidden!im
 .nav-brand{{font-size:1.02rem;font-weight:700;letter-spacing:.01em;color:#fff;line-height:1;}}
 [data-testid="stSidebar"] .stButton{{margin:0 0 5px!important;}}
 [data-testid="stSidebar"] .stButton>button{{width:100%;min-height:57px;height:57px;border:0!important;border-radius:8px!important;box-shadow:none!important;justify-content:flex-start!important;text-align:left!important;font-size:.75rem!important;font-weight:600!important;padding:0 13px!important;margin:0!important;color:#fff!important;background:transparent!important;line-height:1.22!important;gap:11px!important;}}
-/* Force every navigation text block to the identical x-coordinate after its 23px icon. */
 [data-testid="stSidebar"] .st-key-nav_overview button,
 [data-testid="stSidebar"] .st-key-nav_record button,
 [data-testid="stSidebar"] .st-key-nav_topic button{{display:grid!important;grid-template-columns:23px minmax(0,1fr)!important;column-gap:11px!important;align-items:center!important;}}
 [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"],
 [data-testid="stSidebar"] .st-key-nav_record button [data-testid="stMarkdownContainer"],
 [data-testid="stSidebar"] .st-key-nav_topic button [data-testid="stMarkdownContainer"]{{grid-column:2!important;margin:0!important;padding:0!important;min-width:0!important;width:100%!important;justify-self:stretch!important;}}
-/* Fine-tune only the Overview label 2px left without moving its icon or other nav labels. */
 [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"]{{transform:translateX(-2px)!important;}}
 [data-testid="stSidebar"] .st-key-nav_overview button p,
 [data-testid="stSidebar"] .st-key-nav_record button p,
@@ -76,7 +74,6 @@ button[aria-label="Expand sidebar"]{{display:none!important;visibility:hidden!im
 .st-key-nav_overview button::before{{-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M3 10.7 12 3l9 7.7v10.1H14.7v-6.4H9.3v6.4H3z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M3 10.7 12 3l9 7.7v10.1H14.7v-6.4H9.3v6.4H3z'/%3E%3C/svg%3E") center/contain no-repeat;}}
 .st-key-nav_record button::before{{-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 4h10l4 4v12H5z'/%3E%3Cpath d='M15 4v4h4M9 13h6M9 17h4M7 8h4'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 4h10l4 4v12H5z'/%3E%3Cpath d='M15 4v4h4M9 13h6M9 17h4M7 8h4'/%3E%3C/svg%3E") center/contain no-repeat;}}
 .st-key-nav_topic button::before{{-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M4 20h16M7 17V9M12 17V4M17 17v-6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M4 20h16M7 17V9M12 17V4M17 17v-6'/%3E%3C/svg%3E") center/contain no-repeat;}}
-/* Keep student identity and logout visibly above the bottom edge, matching prototype placement. */
 .nav-spacer{{height:10vh;min-height:48px;max-height:90px;}}
 .nav-user-block{{padding:0 7px 9px;border:0;position:relative;z-index:5;}}
 .nav-avatar-row{{display:flex;align-items:center;gap:9px;}}
@@ -92,22 +89,15 @@ button[aria-label="Expand sidebar"]{{display:none!important;visibility:hidden!im
 .st-key-nav_logout button::before{{grid-column:1!important;width:23px;height:23px;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;}}
 [data-testid="stSidebar"] .st-key-nav_logout button:hover{{background:rgba(255,255,255,.05)!important;}}
 
-/* Finalized BRD global header */
 .global-student{{font-size:1.02rem;font-weight:800;color:{DARK};padding-top:.25rem;white-space:nowrap;}}
-.global-label{{font-size:.62rem;color:{BRD_BLUE};font-weight:700;margin-bottom:0;text-align:right;white-space:nowrap;}}
+.global-label{{font-size:.62rem;color:{DARK};font-weight:650;margin-bottom:0;text-align:right;white-space:nowrap;}}
 .global-updated{{font-size:.58rem;color:#595A72;text-align:right;white-space:nowrap;padding-top:.34rem;}}
-/* Shared AS/A selector across Overview, Record Practice Paper and Topic Analysis. */
 [data-testid="stSegmentedControl"] button{{font-size:.61rem!important;font-weight:600!important;min-height:34px!important;padding:.18rem .72rem!important;border-radius:5px!important;background:#FFFFFF!important;color:{BRD_BLUE}!important;border-color:#C9C6F7!important;box-shadow:none!important;}}
-[data-testid="stSegmentedControl"] button p,
-[data-testid="stSegmentedControl"] button span{{color:{BRD_BLUE}!important;}}
 [data-testid="stSegmentedControl"] [aria-pressed="true"]{{background:{BRD_BLUE}!important;color:#FFFFFF!important;border-color:{BRD_BLUE}!important;}}
-[data-testid="stSegmentedControl"] [aria-pressed="true"] p,
-[data-testid="stSegmentedControl"] [aria-pressed="true"] span{{color:#FFFFFF!important;}}
 .st-key-global_action_wrap{{padding-top:.24rem!important;position:relative!important;z-index:20!important;pointer-events:auto!important;}}
 .st-key-global_action_wrap .stButton,.st-key-global_action_wrap .stButton>button{{position:relative!important;z-index:21!important;pointer-events:auto!important;}}
 .st-key-global_action_wrap .stButton>button{{font-size:.60rem!important;font-weight:600!important;min-height:36px!important;padding:.24rem .65rem!important;border-radius:5px!important;background:{PURPLE}!important;border-color:{PURPLE}!important;}}
 
-/* Shared BRD visual system */
 .brd-page-label{{display:none;}}
 div[data-testid="stVerticalBlockBorderWrapper"]{{border-color:{BORDER}!important;border-radius:9px!important;background:#fff;box-shadow:none!important;}}
 .brd-subject-title{{font-size:.76rem;font-weight:900;color:#3526D7;display:flex;align-items:center;gap:8px;letter-spacing:.005em;}}
@@ -214,23 +204,9 @@ def _set_sidebar(open_state):
 
 def _apply_sidebar_state():
     if st.session_state.get("sidebar_open", True):
-        st.markdown(
-            """
-            <style>
-            [data-testid="stSidebar"]{display:block!important;visibility:visible!important;opacity:1!important;transform:translateX(0)!important;margin-left:0!important;}
-            </style>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown("""<style>[data-testid="stSidebar"]{display:block!important;visibility:visible!important;opacity:1!important;transform:translateX(0)!important;margin-left:0!important;}</style>""", unsafe_allow_html=True)
     else:
-        st.markdown(
-            """
-            <style>
-            [data-testid="stSidebar"]{display:none!important;visibility:hidden!important;}
-            </style>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown("""<style>[data-testid="stSidebar"]{display:none!important;visibility:hidden!important;}</style>""", unsafe_allow_html=True)
 
 
 def render_global_header(user):
