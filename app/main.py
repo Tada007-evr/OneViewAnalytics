@@ -29,19 +29,8 @@ st.markdown(
 html,body,[class*="css"]{{font-family:"Arial Narrow",Arial,sans-serif;}}
 .stApp{{background:#FFFFFF;color:{DARK};}}
 .block-container{{max-width:1310px;padding:.30rem 1rem 1.25rem;}}
-/* Keep Streamlit's native sidebar toggle functional while hiding the rest of the header chrome. */
-header[data-testid="stHeader"]{{display:block!important;visibility:visible!important;height:0!important;min-height:0!important;background:transparent!important;pointer-events:none!important;}}
+header[data-testid="stHeader"]{{display:none!important;visibility:hidden!important;height:0!important;pointer-events:none!important;}}
 [data-testid="stToolbar"],[data-testid="stAppDeployButton"],[data-testid="stMainMenu"],[data-testid="stStatusWidget"],[data-testid="stDecoration"],.stAppToolbar,#MainMenu{{display:none!important;visibility:hidden!important;pointer-events:none!important;}}
-[data-testid="stSidebarCollapseButton"],
-[data-testid="stSidebarCollapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:10000!important;}}
-[data-testid="stSidebarCollapseButton"]{{position:absolute!important;top:10px!important;right:7px!important;}}
-[data-testid="stSidebarCollapseButton"] button{{width:30px!important;height:30px!important;min-height:30px!important;border:0!important;border-radius:7px!important;background:rgba(255,255,255,.10)!important;color:#FFFFFF!important;box-shadow:none!important;pointer-events:auto!important;}}
-[data-testid="stSidebarCollapseButton"] button:hover{{background:rgba(255,255,255,.18)!important;}}
-[data-testid="stSidebarCollapseButton"] svg{{color:#FFFFFF!important;fill:currentColor!important;}}
-[data-testid="stSidebarCollapsedControl"]{{position:fixed!important;top:10px!important;left:10px!important;}}
-[data-testid="stSidebarCollapsedControl"] button{{width:34px!important;height:34px!important;min-height:34px!important;border:0!important;border-radius:7px!important;background:#1D187E!important;color:#FFFFFF!important;box-shadow:0 1px 4px rgba(17,16,68,.18)!important;pointer-events:auto!important;}}
-[data-testid="stSidebarCollapsedControl"] button:hover{{background:#2821A3!important;}}
-[data-testid="stSidebarCollapsedControl"] svg{{color:#FFFFFF!important;fill:currentColor!important;}}
 
 /* Finalized BRD shared left navigation */
 [data-testid="stSidebar"]{{background:linear-gradient(180deg,#17145B 0%,#1D187E 50%,#2420B6 100%);border-right:0;min-width:204px!important;max-width:204px!important;width:204px!important;}}
