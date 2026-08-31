@@ -11,6 +11,13 @@ def _overview_brd_styles():
     st.markdown(
         f"""
         <style>
+        /* Overview is a single-line active nav item in Streamlit; pin its text to the
+           same absolute x-position used by the Record Practice Paper / Topic Analysis grid. */
+        [data-testid="stSidebar"] .st-key-nav_overview button{{position:relative!important;display:block!important;}}
+        [data-testid="stSidebar"] .st-key-nav_overview button::before{{position:absolute!important;left:13px!important;top:50%!important;transform:translateY(-50%)!important;}}
+        [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"]{{position:absolute!important;left:47px!important;right:10px!important;top:50%!important;transform:translateY(-50%)!important;width:auto!important;margin:0!important;padding:0!important;}}
+        [data-testid="stSidebar"] .st-key-nav_overview button p{{margin:0!important;padding:0!important;text-align:left!important;}}
+
         .target-practice-heading{{font-size:.78rem;font-weight:900;color:{BRD_BLUE};letter-spacing:.015em;margin:.72rem 0 .08rem;}}
         .target-practice-help{{font-size:.58rem;color:#6F7187;margin:0 0 .42rem;}}
         .brd-section-title{{color:{BRD_BLUE}!important;font-size:.64rem!important;font-weight:900!important;letter-spacing:.02em!important;}}
