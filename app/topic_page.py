@@ -13,7 +13,7 @@ def _styles():
     st.markdown(
         f"""
         <style>
-        .ta-title{{font-size:1.35rem;font-weight:900;color:{BRD_BLUE};margin:.05rem 0 .15rem;}}
+        .ta-title{{font-size:1.35rem;font-weight:900;color:#000000;margin:.05rem 0 .15rem;}}
         .ta-subtitle{{font-size:.66rem;color:#6F7187;margin-bottom:.65rem;}}
         .ta-section-label{{font-size:.70rem;font-weight:900;color:{BRD_BLUE};letter-spacing:.015em;margin:.25rem 0 .35rem;}}
         .ta-context{{font-size:.62rem;color:{DARK};margin:.10rem 0 .55rem;}}
