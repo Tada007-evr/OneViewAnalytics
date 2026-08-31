@@ -60,6 +60,8 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 [data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"],
 [data-testid="stSidebar"] .st-key-nav_record button [data-testid="stMarkdownContainer"],
 [data-testid="stSidebar"] .st-key-nav_topic button [data-testid="stMarkdownContainer"]{{grid-column:2!important;margin:0!important;padding:0!important;min-width:0!important;width:100%!important;justify-self:stretch!important;}}
+/* Fine-tune only the Overview label 2px left without moving its icon or other nav labels. */
+[data-testid="stSidebar"] .st-key-nav_overview button [data-testid="stMarkdownContainer"]{{transform:translateX(-2px)!important;}}
 [data-testid="stSidebar"] .st-key-nav_overview button p,
 [data-testid="stSidebar"] .st-key-nav_record button p,
 [data-testid="stSidebar"] .st-key-nav_topic button p{{margin:0!important;padding:0!important;white-space:pre-line!important;text-align:left!important;color:#fff!important;line-height:1.22!important;}}
