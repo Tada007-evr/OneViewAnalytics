@@ -69,9 +69,10 @@ header[data-testid="stHeader"]{{display:none!important;visibility:hidden!importa
 .nav-level{{font-size:.57rem;color:#E1DEFF;line-height:1.12;margin-top:5px;}}
 .nav-logout-wrap{{border-top:1px solid rgba(255,255,255,.13);padding:5px 0 0;margin:0 -2px;position:relative;z-index:5;}}
 [data-testid="stSidebar"] .st-key-nav_logout{{margin:0!important;}}
-[data-testid="stSidebar"] .st-key-nav_logout button{{min-height:44px!important;height:44px!important;padding:0 12px!important;font-size:.68rem!important;font-weight:500!important;background:transparent!important;box-shadow:none!important;border:0!important;color:#fff!important;justify-content:flex-start!important;text-align:left!important;gap:11px!important;}}
-[data-testid="stSidebar"] .st-key-nav_logout button p{{font-size:.68rem!important;color:#fff!important;white-space:nowrap!important;line-height:1!important;}}
-.st-key-nav_logout button::before{{width:23px;height:23px;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;}}
+[data-testid="stSidebar"] .st-key-nav_logout button{{min-height:44px!important;height:44px!important;padding:0 13px!important;font-size:.75rem!important;font-weight:600!important;background:transparent!important;box-shadow:none!important;border:0!important;color:#fff!important;display:grid!important;grid-template-columns:23px minmax(0,1fr)!important;column-gap:11px!important;align-items:center!important;justify-content:stretch!important;text-align:left!important;}}
+[data-testid="stSidebar"] .st-key-nav_logout button [data-testid="stMarkdownContainer"]{{grid-column:2!important;margin:0!important;padding:0!important;min-width:0!important;width:100%!important;justify-self:stretch!important;}}
+[data-testid="stSidebar"] .st-key-nav_logout button p{{font-size:.75rem!important;font-weight:600!important;color:#fff!important;white-space:nowrap!important;line-height:1.22!important;margin:0!important;padding:0!important;text-align:left!important;}}
+.st-key-nav_logout button::before{{grid-column:1!important;width:23px;height:23px;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4H4v16h6'/%3E%3Cpath d='M13 8l4 4-4 4'/%3E%3Cpath d='M8 12h9'/%3E%3C/svg%3E") center/contain no-repeat;}}
 [data-testid="stSidebar"] .st-key-nav_logout button:hover{{background:rgba(255,255,255,.05)!important;}}
 
 /* Finalized BRD global header */
@@ -117,7 +118,6 @@ button[kind="primary"]{{background:{PURPLE}!important;border-color:{PURPLE}!impo
 .stButton>button{{border-radius:5px;font-size:.61rem;min-height:31px;}}
 .stSelectbox label,.stDateInput label,.stTextInput label,.stNumberInput label{{font-size:.57rem!important;font-weight:650!important;color:{DARK}!important;}}
 [data-baseweb="select"]>div,input{{font-size:.61rem!important;}}
-hr{{margin:.30rem 0 .65rem!important;border-color:#E7E8EF!important;}}
 @media(max-width:1100px){{[data-testid="stSidebar"]{{min-width:194px!important;max-width:194px!important;width:194px!important;}}[data-testid="stSidebar"]>div:first-child{{width:194px!important;}}.nav-brand-wrap{{height:68px;}}[data-testid="stSidebar"] .stButton>button{{min-height:50px;height:50px;}}.nav-spacer{{height:5vh;min-height:26px;max-height:48px;}}.block-container{{padding-left:.75rem;padding-right:.75rem;}}}}
 </style>
 """,
