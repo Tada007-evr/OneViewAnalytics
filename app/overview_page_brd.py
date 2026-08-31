@@ -3,6 +3,27 @@ import streamlit as st
 
 import overview_page as ov
 
+BRD_BLUE = "#3526D7"
+DARK = "#111044"
+
+
+def _overview_brd_styles():
+    st.markdown(
+        f"""
+        <style>
+        .target-practice-heading{{font-size:.78rem;font-weight:900;color:{BRD_BLUE};letter-spacing:.015em;margin:.72rem 0 .08rem;}}
+        .target-practice-help{{font-size:.58rem;color:#6F7187;margin:0 0 .42rem;}}
+        .brd-section-title{{color:{BRD_BLUE}!important;font-size:.64rem!important;font-weight:900!important;letter-spacing:.02em!important;}}
+        .brd-context{{color:{DARK}!important;font-size:.55rem!important;margin:.08rem 0 .35rem!important;}}
+        .brd-target-cell{{min-height:62px;border-right:1px solid #E8E8F0;padding:5px 7px;}}
+        .brd-target-label{{color:{BRD_BLUE}!important;font-size:.49rem!important;font-weight:900!important;letter-spacing:.025em!important;}}
+        .brd-target-value{{color:{DARK}!important;font-size:.80rem!important;font-weight:900!important;margin-top:5px;}}
+        .brd-target-footer{{display:flex;align-items:center;justify-content:space-between;gap:7px;color:#6F7187;font-size:.52rem;margin-top:3px;flex-wrap:wrap;}}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
 
 def _subject_panel_brd(sb, user, level, subject):
     """Render the finalized Overview subject panel with BRD-exact Average Performance treatment."""
@@ -86,6 +107,7 @@ def _subject_panel_brd(sb, user, level, subject):
 
 def render_overview(sb, user):
     """BRD Overview body. The shared global header is rendered once by main.py on every page."""
+    _overview_brd_styles()
     st.session_state.setdefault("overview_level", "AS Level")
     level = st.session_state.overview_level
 
@@ -97,6 +119,11 @@ def render_overview(sb, user):
     with stats:
         _subject_panel_brd(sb, user, level, "Statistics")
 
+    st.markdown("<div class='target-practice-heading'>TARGET PRACTICE</div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='target-practice-help'>Target Type · Target · Completed · Remaining · % Completion · Status</div>",
+        unsafe_allow_html=True,
+    )
     ov.target_practice_dashboard(sb, user, level)
 
     st.markdown(
